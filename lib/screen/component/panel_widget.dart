@@ -50,6 +50,7 @@ class PanelWidget extends StatelessWidget {
             titlePaddingY: titlePaddingY,
             titleTextSize: titleTextSize,
             panelColor: panelColor,
+            panelTitleColor: panelTitleColor,
           ),
         ),
         Positioned(
