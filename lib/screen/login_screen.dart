@@ -1,5 +1,6 @@
 import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key, this.title}) : super(key: key);
@@ -25,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           color: Color.fromARGB(255, 117, 53, 83),
         ),
-//        constraints: BoxConstraints.expand(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.1),
           child: Column(
@@ -36,10 +36,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(color: kThemeColor, fontSize: 40),
               ),
               SizedBox(height: height * 0.12),
-              Image.asset(
-                'images/earth@3x.png',
-                width: width * 0.7,
-              ),
+              TweenAnimationBuilder(
+                  duration: Duration(seconds: 3),
+                  tween: Tween<double>(begin: 0, end: 2 * math.pi),
+                  builder: (_, double angle, __) {
+                    return Transform.rotate(
+                      angle: angle,
+                      child: Image.asset(
+                        'images/earth@3x.png',
+                        width: width * 0.7,
+                      ),
+                    );
+                  }),
               SizedBox(height: height * 0.06),
               FlatButton(
                 color: kThemeColor,
@@ -51,7 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: kTextColor, fontSize: 20),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/signUp');
+                },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   side: BorderSide(color: kThemeColor, width: 2),
