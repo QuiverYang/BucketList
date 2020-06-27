@@ -5,7 +5,7 @@ import '../../utilities/constant.dart';
 const Widget sizedBoxHeight16 = const SizedBox(height: 16);
 
 class DragoonAppBar extends AppBar {
-  DragoonAppBar({Key key, String title, Widget leadingWidget})
+  DragoonAppBar({Key key, String title, Widget leadingWidget, Widget bottom,})
       : super(
           key: key,
           iconTheme: IconThemeData(
@@ -18,6 +18,7 @@ class DragoonAppBar extends AppBar {
           elevation: 0,
           backgroundColor: Color.fromARGB(160, 22, 29, 32),
           leading: leadingWidget,
+          bottom: bottom,
         );
 }
 
