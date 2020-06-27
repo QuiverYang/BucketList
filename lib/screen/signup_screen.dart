@@ -1,6 +1,10 @@
 import 'package:bucketlist/utilities/constant.dart';
+import 'package:bucketlist/utilities/methods.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'component/panel_widget.dart';
+import 'component/util_widget.dart';
+import 'package:bucketlist/utilities/fakedata.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key key, this.title}) : super(key: key);
@@ -10,23 +14,29 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController locationTEC;
+  TextEditingController birthdayTEC;
+  TextEditingController genderTEC;
+  TextEditingController nameTEC;
+  @override
+  void initState() {
+    super.initState();
+    locationTEC = TextEditingController();
+    birthdayTEC = TextEditingController();
+    genderTEC = TextEditingController();
+    nameTEC = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
     final panelWidth = MediaQuery.of(context).size.width - 48;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: kThemeColor, //change your color here
-        ),
-        title: Text(
-          "${widget.title ?? 'Sign up'}",
-          style: TextStyle(color: kThemeColor),
-        ),
-        elevation: 0,
-        backgroundColor: Color.fromARGB(160, 22, 29, 32),
+      appBar: DragoonAppBar(
+        title: 'Sign up',
       ),
       body: Scaffold(
         body: Container(
@@ -49,10 +59,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   titleTextSize: 14,
                   contentWidget: Column(
                     children: [
-                      oneRow('Name', 'Dragoon dot TW', panelWidth: panelWidth),
-                      oneRow('Birthday', '1987/11/11', panelWidth: panelWidth),
-                      oneRow('Location', 'Taiwan', panelWidth: panelWidth),
-                      oneRow('Gender', 'Male', panelWidth: panelWidth),
+                      oneRow('Name', 'Dragoon dot TW',
+                          panelWidth: panelWidth,
+                          textEditingController: nameTEC),
+                      oneRow('Birthday', '1987/11/11',
+                          panelWidth: panelWidth,
+                          textEditingController: birthdayTEC),
+                      oneRow('Location', 'Taiwan',
+                          panelWidth: panelWidth,
+                          pickData: avgLife,
+                          textEditingController: locationTEC),
+                      oneRow('Gender', 'Male',
+                          panelWidth: panelWidth,
+                          pickData: {'Male': 0, 'Female': 0},
+                          loop: false,
+                          textEditingController: genderTEC),
                     ],
                   ),
                 ),
@@ -67,21 +88,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '剩餘壽命',
+                          '${nameTEC.text} Life',
                           style: TextStyle(color: Colors.white),
                         ),
                         RichText(
                           text: TextSpan(children: [
                             TextSpan(
-                                text: '30', style: TextStyle(fontSize: 90)),
-                            TextSpan(text: '/80')
+                                text: _countAge(birthdayTEC.text) ?? '0',
+                                style: TextStyle(fontSize: 90)),
+                            TextSpan(
+                                text:
+                                    '/${avgLife["${locationTEC.text == '' ? 'Taiwan' : locationTEC.text}"]}')
                           ]),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              '地區平均壽命',
+                              '${locationTEC.text} life Exp',
                               style: TextStyle(color: Colors.white),
                             ),
                           ],
@@ -102,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signUp');
+                    Navigator.of(context).pushNamed('/bucketList');
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -112,12 +136,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ],
             ),
           ),
-        ), // This trailin,
+        ),
       ),
     );
   }
 
-  Widget oneRow(String title, String hint, {double panelWidth}) {
+  // 生日只能是yyyy/mm/dd or yyyymmdd
+  String _countAge(String birthdayStr) {
+    String result;
+    var now = DateTime.now();
+    var formatedBirth = birthdayStr.replaceAll('/', '');
+    try {
+      var birthday = DateTime.parse(formatedBirth);
+      var age = now.year - birthday.year;
+      return '$age';
+    } catch (e) {
+      print('birthday parse error $e');
+      return result;
+    }
+  }
+
+  Widget oneRow(String title, String hint,
+      {double panelWidth,
+      Map<String, dynamic> pickData,
+      bool loop = true,
+      TextEditingController textEditingController}) {
+    TextEditingController _textEditingController =
+        textEditingController ?? TextEditingController();
+
     return Container(
       constraints: BoxConstraints(maxWidth: panelWidth),
       padding: EdgeInsets.only(right: 70, bottom: 20),
@@ -132,13 +178,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Container(
             width: 200,
             child: TextField(
+              controller: _textEditingController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Color.fromARGB(100, 147, 218, 216),
                 hintText: hint,
-                hintStyle: TextStyle(color: kThemeColor, fontSize: 18),
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
+                labelStyle: TextStyle(color: kThemeColor, fontSize: 18),
               ),
-              onChanged: (value) {},
+              textAlign: TextAlign.center,
+              onChanged: (value) {
+                setState(() {
+                  _textEditingController.text = value;
+                });
+              },
+              style: TextStyle(color: kThemeColor, fontSize: 18),
+              onTap: () async {
+                String selected = await showDragoonCupertinoPicker(
+                    context, pickData,
+                    title: title, loop: loop);
+                if (selected != null && selected != '') {
+                  _textEditingController.text = selected;
+                  setState(() {});
+                }
+              },
             ),
           )
         ],
