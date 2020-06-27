@@ -1,5 +1,6 @@
 import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
+import 'component/panel_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key key, this.title}) : super(key: key);
@@ -11,8 +12,9 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+    final panelWidth = MediaQuery.of(context).size.width - 48;
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -45,6 +47,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Text(
                     'Admin Quests',
                     style: TextStyle(color: kThemeColor, fontSize: 40),
+                  ),
+                  PanelWidget(
+                    panelSize: Size(panelWidth, panelWidth * 0.33),
+                    title: "Profile",
+                    titleTextSize: 14,
+                    contentWidget: Column(
+                      children: [Text('1'), Text('2')],
+                    ),
                   ),
                   FlatButton(
                     color: kThemeColor,
