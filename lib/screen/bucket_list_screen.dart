@@ -1,8 +1,11 @@
+import 'dart:math';
+
+import 'package:bucketlist/utilities/fakedata.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constant.dart';
-import '../utilities/constant.dart';
 import 'component/panel_widget.dart';
+import 'component/progress_dot_widget.dart';
 import 'component/util_widget.dart';
 
 class BucketListScreen extends StatefulWidget {
@@ -14,9 +17,20 @@ class BucketListScreen extends StatefulWidget {
 }
 
 class _BucketListScreenState extends State<BucketListScreen> {
+  /// 任務數量
+  int _listItemCount = Random.secure().nextInt(6) + 1;
+
+  /// 任務面板寬度
+  double _panelWidth = 0;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _panelWidth = MediaQuery.of(context).size.width - 48;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final panelWidth = MediaQuery.of(context).size.width - 48;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: DragoonAppBar(
@@ -32,27 +46,83 @@ class _BucketListScreenState extends State<BucketListScreen> {
           Container(
             margin: EdgeInsets.only(top: 16),
             child: ListView.separated(
-
-                itemCount: 3,
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    height: 10,
-                  );
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  return Center(
-                    child: PanelWidget(
-                      panelSize: Size(panelWidth, panelWidth * 0.33),
-                      title: "Profile",
-                      titleTextSize: 14,
-                      panelColor: kThemeColor,
-                      panelTitleColor: Colors.black,
-                      contentWidget: Text("AAAAA"),
-                    ),
-                  );
-                }),
+              itemCount: _listItemCount,
+              separatorBuilder: _listSeperator,
+              itemBuilder: _listItemBuilder,
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _listSeperator(BuildContext context, int index) {
+    return SizedBox(
+      height: 16,
+    );
+  }
+
+  Widget _listItemBuilder(BuildContext context, int index) {
+    Size panelSize = Size(_panelWidth, 90.0 + 24 + 14);
+    final totalProgressCount = 10;
+    final double iconWidth = 90;
+    final dividerWidth = panelSize.width - iconWidth - 50;
+
+    final category = questTitles1.keys.elementAt(Random.secure().nextInt(questTitles1.length));
+    final title = questTitles1[category].elementAt(Random.secure().nextInt(questTitles1[category].length));
+
+    return Center(
+      child: PanelWidget(
+        panelSize: panelSize,
+        title: category,
+        titleTextSize: 14,
+        panelColor: kThemeColor,
+        panelTitleColor: Colors.black,
+        contentWidget: Row(
+          children: [
+            Image.asset(
+              "images/icCategoryEnv.png",
+              width: iconWidth,
+              height: iconWidth,
+            ),
+            SizedBox(width: 12),
+            Wrap(
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: kThemeColor, fontSize: 24),
+                ),
+                Container(
+                  color: kThemeColor,
+                  width: dividerWidth,
+                  height: 1,
+                  margin: EdgeInsets.only(top: 8, bottom: 4),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Deadline 2020/07/24',
+                  style: TextStyle(color: kThemeColor),
+                ),
+                SizedBox(height: 4),
+                Wrap(
+                  children: [
+                    Text(
+                      'Progress',
+                      style: TextStyle(color: kThemeColor),
+                    ),
+                    ProgressDotBar(
+                      nowProgress: Random.secure().nextInt(totalProgressCount),
+                      totalProgress: totalProgressCount,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
