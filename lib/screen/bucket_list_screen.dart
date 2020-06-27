@@ -56,11 +56,7 @@ class _BucketListScreenState extends State<BucketListScreen> {
     );
   }
 
-  Widget _listSeperator(BuildContext context, int index) {
-    return SizedBox(
-      height: 16,
-    );
-  }
+  Widget _listSeperator(BuildContext context, int index) => sizedBoxHeight16;
 
   String _randomCategory() => questTitles1.keys.elementAt(
         Random.secure().nextInt(questTitles1.length),

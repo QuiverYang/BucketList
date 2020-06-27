@@ -61,11 +61,7 @@ class _AddListScreenState extends State<AddListScreen> {
     );
   }
 
-  Widget _listSeperator(BuildContext context, int index) {
-    return SizedBox(
-      height: 16,
-    );
-  }
+  Widget _listSeperator(BuildContext context, int index) => sizedBoxHeight16;
 
   Widget _listItemBuilder(BuildContext context, int index) {
     return QuestListItem(
