@@ -77,7 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: kThemeColor, fontSize: 20),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/bucketList');
+                },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   side: BorderSide(color: kThemeColor, width: 2),
