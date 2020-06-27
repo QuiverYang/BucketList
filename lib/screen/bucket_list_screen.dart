@@ -14,9 +14,21 @@ class BucketListScreen extends StatefulWidget {
 }
 
 class _BucketListScreenState extends State<BucketListScreen> {
+
+  /// 任務數量
+  int _listItemCount = 3;
+
+  /// 任務面板寬度
+  double _panelWidth = 0;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _panelWidth = MediaQuery.of(context).size.width - 48;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final panelWidth = MediaQuery.of(context).size.width - 48;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: DragoonAppBar(
@@ -32,30 +44,36 @@ class _BucketListScreenState extends State<BucketListScreen> {
           Container(
             margin: EdgeInsets.only(top: 16),
             child: ListView.separated(
-
-                itemCount: 3,
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    height: 10,
-                  );
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  return Center(
-                    child: PanelWidget(
-                      panelSize: Size(panelWidth, panelWidth * 0.33),
-                      title: "Profile",
-                      titleTextSize: 14,
-                      panelColor: kThemeColor,
-                      panelTitleColor: Colors.black,
-                      contentWidget: Text("AAAAA"),
-                    ),
-                  );
-                }),
+              itemCount: _listItemCount,
+              separatorBuilder: _listSeperator,
+              itemBuilder: _listItemBuilder,
+            ),
           ),
         ],
       ),
     );
   }
+
+  Widget _listSeperator(BuildContext context, int index) {
+    return SizedBox(
+      height: 10,
+    );
+  }
+
+  Widget _listItemBuilder(BuildContext context, int index) {
+    return Center(
+      child: PanelWidget(
+        panelSize: Size(_panelWidth, _panelWidth * 0.33),
+        title: "Profile",
+        titleTextSize: 14,
+        panelColor: kThemeColor,
+        panelTitleColor: Colors.black,
+        contentWidget: Text("AAAAA"),
+      ),
+    );
+  }
+
+
 
   Widget _leadingButton() {
     return Builder(
@@ -65,7 +83,9 @@ class _BucketListScreenState extends State<BucketListScreen> {
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
-          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          tooltip: MaterialLocalizations
+              .of(context)
+              .openAppDrawerTooltip,
         );
       },
     );
