@@ -4,6 +4,8 @@ import '../../utilities/constant.dart';
 
 const Widget sizedBoxHeight16 = const SizedBox(height: 16);
 
+const Widget sizedBoxWidth8 = const SizedBox(width: 8);
+
 class DragoonAppBar extends AppBar {
   DragoonAppBar({Key key, String title, Widget leadingWidget, Widget bottom,})
       : super(

@@ -7,6 +7,7 @@ import '../utilities/constant.dart';
 import 'component/quest_item_widget.dart';
 import 'component/util_widget.dart';
 import 'data/quest_data.dart';
+import 'detail_screen.dart';
 
 class BucketListScreen extends StatefulWidget {
   BucketListScreen({Key key, this.title}) : super(key: key);
@@ -68,15 +69,26 @@ class _BucketListScreenState extends State<BucketListScreen> {
 
   Widget _listItemBuilder(BuildContext context, int index) {
     final category = _randomCategory();
-    return QuestListItem(
-      panelSize: Size(_panelWidth, questItemPanelHeight),
-      data: QuestData(
-        category: category,
-        title: _randomTitle(category),
-        iconData: null,
-        deadline: "2020/07/24",
-        progressTotal: totalProgressCount,
-        progressNow: Random.secure().nextInt(totalProgressCount),
+    final QuestData data = QuestData(
+      category: category,
+      title: _randomTitle(category),
+      iconData: null,
+      deadline: "2020/07/24",
+      progressTotal: totalProgressCount,
+      progressNow: Random.secure().nextInt(totalProgressCount),
+    );
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => DetailScreen(data: data))
+        );
+      },
+      child: Container(
+        color: Colors.transparent,
+        child: QuestListItem(
+          panelSize: Size(_panelWidth, questItemPanelHeight),
+          data: data,
+        ),
       ),
     );
   }
