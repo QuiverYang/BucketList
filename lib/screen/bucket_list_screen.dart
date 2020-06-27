@@ -1,8 +1,11 @@
+import 'dart:math';
+
+import 'package:bucketlist/utilities/fakedata.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constant.dart';
-import '../utilities/constant.dart';
 import 'component/panel_widget.dart';
+import 'component/progress_dot_widget.dart';
 import 'component/util_widget.dart';
 
 class BucketListScreen extends StatefulWidget {
@@ -14,9 +17,8 @@ class BucketListScreen extends StatefulWidget {
 }
 
 class _BucketListScreenState extends State<BucketListScreen> {
-
   /// 任務數量
-  int _listItemCount = 3;
+  int _listItemCount = Random.secure().nextInt(6) + 1;
 
   /// 任務面板寬度
   double _panelWidth = 0;
@@ -56,24 +58,74 @@ class _BucketListScreenState extends State<BucketListScreen> {
 
   Widget _listSeperator(BuildContext context, int index) {
     return SizedBox(
-      height: 10,
+      height: 16,
     );
   }
 
   Widget _listItemBuilder(BuildContext context, int index) {
+    Size panelSize = Size(_panelWidth, 90.0 + 24 + 14);
+    final totalProgressCount = 10;
+    final double iconWidth = 90;
+    final dividerWidth = panelSize.width - iconWidth - 50;
+
+    final category = questTitles1.keys.elementAt(Random.secure().nextInt(questTitles1.length));
+    final title = questTitles1[category].elementAt(Random.secure().nextInt(questTitles1[category].length));
+
     return Center(
       child: PanelWidget(
-        panelSize: Size(_panelWidth, _panelWidth * 0.33),
-        title: "Profile",
+        panelSize: panelSize,
+        title: category,
         titleTextSize: 14,
         panelColor: kThemeColor,
         panelTitleColor: Colors.black,
-        contentWidget: Text("AAAAA"),
+        contentWidget: Row(
+          children: [
+            Image.asset(
+              "images/icCategoryEnv.png",
+              width: iconWidth,
+              height: iconWidth,
+            ),
+            SizedBox(width: 12),
+            Wrap(
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: kThemeColor, fontSize: 24),
+                ),
+                Container(
+                  color: kThemeColor,
+                  width: dividerWidth,
+                  height: 1,
+                  margin: EdgeInsets.only(top: 8, bottom: 4),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Deadline 2020/07/24',
+                  style: TextStyle(color: kThemeColor),
+                ),
+                SizedBox(height: 4),
+                Wrap(
+                  children: [
+                    Text(
+                      'Progress',
+                      style: TextStyle(color: kThemeColor),
+                    ),
+                    ProgressDotBar(
+                      nowProgress: Random.secure().nextInt(totalProgressCount),
+                      totalProgress: totalProgressCount,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
-
-
 
   Widget _leadingButton() {
     return Builder(
@@ -83,9 +135,7 @@ class _BucketListScreenState extends State<BucketListScreen> {
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
-          tooltip: MaterialLocalizations
-              .of(context)
-              .openAppDrawerTooltip,
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         );
       },
     );
