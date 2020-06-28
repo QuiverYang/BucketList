@@ -32,42 +32,33 @@ class _BucketListScreenState extends State<BucketListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
+    return DragoonScaffold(
       appBar: DragoonAppBar(
         title: "Admin Quest",
         leadingWidget: _leadingButton(),
       ),
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          DragoonAppBg(),
-          SafeArea(
-            child: Container(
-              margin: EdgeInsets.only(top: 16),
-              child: CustomScrollView(
-                slivers: [
-                  SliverFixedExtentList(
-                    itemExtent: questItemPanelHeight,
-                    delegate: SliverChildBuilderDelegate(
-                      _listItemBuilder,
-                      childCount: _listItemCount,
-                    ),
-                  ),
-                  SliverFixedExtentList(
-                    itemExtent: 100,
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return _buttomExploreArea();
-                      },
-                      childCount: 1,
-                    ),
-                  ),
-                ],
+      body: Container(
+        margin: EdgeInsets.only(top: 16),
+        child: CustomScrollView(
+          slivers: [
+            SliverFixedExtentList(
+              itemExtent: questItemPanelHeight,
+              delegate: SliverChildBuilderDelegate(
+                _listItemBuilder,
+                childCount: _listItemCount,
               ),
             ),
-          ),
-        ],
+            SliverFixedExtentList(
+              itemExtent: 100,
+              delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  return _buttomExploreArea();
+                },
+                childCount: 1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

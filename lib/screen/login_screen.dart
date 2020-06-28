@@ -1,3 +1,4 @@
+import 'package:bucketlist/screen/component/util_widget.dart';
 import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -16,16 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
+    return DragoonScaffold(
       body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("images/appBg@3x.png"),
-            fit: BoxFit.cover,
-          ),
-          color: Color.fromARGB(255, 117, 53, 83),
-        ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.1),
           child: Column(
