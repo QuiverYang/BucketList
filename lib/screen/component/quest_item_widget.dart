@@ -45,11 +45,14 @@ class QuestListItem extends StatelessWidget {
             Wrap(
               direction: Axis.vertical,
               children: [
-                Text(
-                  data.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: kThemeColor, fontSize: 24),
+                SizedBox(
+                  width: panelSize.width - 90 - 24,
+                  child: Text(
+                    data.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: kThemeColor, fontSize: 24),
+                  ),
                 ),
                 Container(
                   color: kThemeColor,
