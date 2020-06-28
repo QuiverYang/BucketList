@@ -1,3 +1,4 @@
+import 'package:bucketlist/utilities/fakedata.dart';
 import 'package:flutter/cupertino.dart';
 
 class QuestData {
@@ -16,4 +17,8 @@ class QuestData {
     @required this.progressTotal,
     @required this.iconData,
   });
+
+  String iconAsset() => categoryIconAsset[category];
+
+  String imageAsset() => categoryImageAsset[category];
 }

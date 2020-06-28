@@ -37,7 +37,7 @@ class QuestListItem extends StatelessWidget {
         contentWidget: Row(
           children: [
             Image.asset(
-              "images/icCategoryEnv.png",
+              data.iconAsset(),
               width: iconWidth,
               height: iconWidth,
             ),

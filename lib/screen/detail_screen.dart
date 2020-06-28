@@ -140,7 +140,7 @@ class _DetailScreenState extends State<DetailScreen>
     return Stack(
       children: [
         Image.asset(
-          "images/icCategoryEnv.png",
+          widget.data.imageAsset(),
           width: double.infinity,
           height: mainImageHeight,
           fit: BoxFit.cover,

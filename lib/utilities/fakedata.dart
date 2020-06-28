@@ -6,6 +6,22 @@ const List<String> categories = [
   'Interests'
 ];
 
+const Map<String, String> categoryIconAsset = {
+  'Family & Friends' : 'images/cat1.png',
+  'Work' : 'images/cat2.png',
+  'Health' : 'images/cat3.png',
+  'Wealth' : 'images/cat4.png',
+  'Interests' : 'images/cat5.png',
+};
+
+const Map<String, String> categoryImageAsset = {
+  'Family & Friends' : 'images/banner1.png',
+  'Work' : 'images/banner2.png',
+  'Health' : 'images/banner3.png',
+  'Wealth' : 'images/banner4.png',
+  'Interests' : 'images/banner5.png',
+};
+
 const Map<String, List<String>> questTitles1 = {
   'Family & Friends': [
     'Make a plan for buying a house',
