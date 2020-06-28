@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: kAppName,
       theme: ThemeData(
         fontFamily: kMainFont,
           primarySwatch: Colors.blue,
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
               BottomSheetThemeData(backgroundColor: Colors.transparent)),
       routes: {
         '/test': (context) => TestScreen(),
-        kRouteDefault: (context) => LoginScreen(title: 'Flutter Demo Home Page'),
+        kRouteDefault: (context) => LoginScreen(),
         kRouteSignupPage: (context) => SignUpScreen(),
         kRouteBucketListPage: (context) => BucketListScreen(),
         kRouteAddListPage: (context) => AddListScreen(),

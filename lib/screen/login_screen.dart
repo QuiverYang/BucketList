@@ -8,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'component/login_main_image.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key key, this.title}) : super(key: key);
-
-  final String title;
+  LoginScreen({Key key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
