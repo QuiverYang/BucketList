@@ -90,9 +90,9 @@ class _DetailScreenState extends State<DetailScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(width: pagePadding005),
-                    _titleBox(widget.data.title),
-                    SizedBox(width: pagePadding005),
+                    Expanded(child: _titleBox(widget.data.title)),
                     _takesTimeBox(days),
+                    SizedBox(width: pagePadding005),
                   ],
                 ),
                 _categoryInfo(),
@@ -128,7 +128,7 @@ class _DetailScreenState extends State<DetailScreen>
             title,
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.headline4.apply(color: kThemeColor),
+            style: textTheme.headline5.apply(color: kThemeColor),
           ),
         )
       ],
@@ -238,12 +238,12 @@ class _DetailScreenState extends State<DetailScreen>
                 Theme.of(context).textTheme.subtitle2.apply(color: kThemeColor),
           ),
         ),
-        SizedBox(width: pagePadding005 /2),
+        SizedBox(width: pagePadding005 / 2),
         Text(
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.headline5.apply(color: kThemeColor),
+          style: textTheme.headline6.apply(color: kThemeColor),
         ),
       ],
     );
