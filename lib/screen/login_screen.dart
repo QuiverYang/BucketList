@@ -44,16 +44,14 @@ class _LoginScreenState extends State<LoginScreen> {
               height: width * 0.8,
               decoration: BoxDecoration(
                   gradient: RadialGradient(
-                    colors: [
-                      Colors.white,
-                      Colors.red,
-                      Colors.transparent
-                    ],
-                  )),
+                colors: [Colors.white, Colors.red, Colors.transparent],
+              )),
             ),
           ),
           // animation
-          Center(child: _mainAnim()),
+          Center(
+              child: SizedBox(
+                  width: width * 0.8, height: width * 0.8, child: _mainAnim())),
           // app title
           Positioned(
             top: pagePadding01,
