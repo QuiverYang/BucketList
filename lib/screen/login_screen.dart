@@ -53,9 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     setState(() {
                       math.Random().nextInt(255);
                       colorEnd = Color.fromARGB(
-                          math.Random().nextInt(255),
-                          math.Random().nextInt(255),
-                          math.Random().nextInt(255),
+                          155 + math.Random().nextInt(100),
+                          math.Random().nextInt(200),
+                          math.Random().nextInt(100),
                           math.Random().nextInt(255));
                       _newColor = colorEnd;
                     });
