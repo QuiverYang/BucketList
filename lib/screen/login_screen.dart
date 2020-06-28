@@ -35,68 +35,83 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return DragoonScaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(pagePadding01),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
+      body: Stack(
+        children: [
+          // background red light
+          Center(
+            child: Container(
+              width: width * 0.8,
+              height: width * 0.8,
+              decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      Colors.white,
+                      Colors.red,
+                      Colors.transparent
+                    ],
+                  )),
+            ),
+          ),
+          // animation
+          Center(child: _mainAnim()),
+          // app title
+          Positioned(
+            top: pagePadding01,
+            left: pagePadding01,
+            right: pagePadding01,
+            child: Center(
+              child: Text(
                 kAppName,
                 style: TextStyle(color: kThemeColor, fontSize: 40),
               ),
-              SizedBox(height: height * 0.12),
-              Stack(
-                children: [
-                  Container(
-                    width: width * 0.8,
-                    height: width * 0.8,
-                    decoration: BoxDecoration(
-                        gradient: RadialGradient(
-                      colors: [Colors.white, Colors.red, Colors.transparent],
-                    )),
+            ),
+          ),
+          // button area
+          Positioned(
+            left: pagePadding01,
+            right: pagePadding01,
+            bottom: pagePadding01,
+            child: Container(
+              width: width,
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                children: <Widget>[
+                  MainButtonFilled(
+                    text: kSignup,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        FadeRoute(
+                          routeName: kRouteSignupPage,
+                          page: SignUpScreen(),
+                        ),
+                      );
+                    },
                   ),
-                  _mainAnim(),
+                  SizedBox(height: 5),
+                  MainButtonStroked(
+                    text: kLogin,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        FadeRoute(
+                          routeName: kRouteBucketListPage,
+                          page: BucketListScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    kForgotAccount,
+                    style: TextStyle(color: kThemeColor),
+                    textAlign: TextAlign.right,
+                  )
                 ],
               ),
-              SizedBox(height: height * 0.06),
-              MainButtonFilled(
-                text: kSignup,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    FadeRoute(
-                      routeName: kRouteSignupPage,
-                      page: SignUpScreen(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 5),
-              MainButtonStroked(
-                text: kLogin,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    FadeRoute(
-                      routeName: kRouteBucketListPage,
-                      page: BucketListScreen(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 15),
-              Container(
-                width: double.infinity,
-                child: Text(
-                  kForgotAccount,
-                  style: TextStyle(color: kThemeColor),
-                  textAlign: TextAlign.right,
-                ),
-              )
-            ],
+            ),
           ),
-        ),
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
