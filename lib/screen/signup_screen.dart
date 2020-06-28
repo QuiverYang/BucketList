@@ -24,6 +24,8 @@ class _SignUpScreenState extends State<SignUpScreen>
   double width = 0;
   double height = 0;
   double panelWidth = 0;
+  double pagePadding01 = 0;
+  double pagePadding005 = 0;
 
   @override
   void didChangeDependencies() {
@@ -31,6 +33,8 @@ class _SignUpScreenState extends State<SignUpScreen>
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     panelWidth = MediaQuery.of(context).size.width - 48;
+    pagePadding01 = width * 0.1;
+    pagePadding005 = width * 0.05;
   }
 
   @override
@@ -44,27 +48,26 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
+    return DragoonScaffold(
       appBar: DragoonAppBar(
         title: 'Sign up',
       ),
-      body: DragoonScaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _profileArea(),
-                  SizedBox(height: 20),
-                  _expectancyArea(),
-                  SizedBox(height: 20),
-                  _footerArea(context),
-                ],
-              ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: pagePadding01, vertical: pagePadding005),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _profileArea(),
+                SizedBox(height: 20),
+                _expectancyArea(
+                  areaLabel: '${locationTEC.text} life Exp',
+                ),
+                SizedBox(height: 20),
+                _footerArea(context),
+              ],
             ),
           ),
         ),
@@ -93,37 +96,61 @@ class _SignUpScreenState extends State<SignUpScreen>
     );
   }
 
-  PanelWidget _expectancyArea() {
+  PanelWidget _expectancyArea({
+    String areaLabel,
+  }) {
+    final areaWidth = panelWidth - width * 0.2 + 16;
     return PanelWidget(
       panelSize: Size(panelWidth, panelWidth * 0.5),
       title: "EXPECTANCY",
       titleTextSize: 14,
       contentWidget: Container(
-        width: panelWidth - width * 0.2 + 16,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          direction: Axis.vertical,
           children: [
-            Text(
-              '${nameTEC.text}',
-              style: TextStyle(color: Colors.white),
-            ),
-            MyStatefulWidget(
-              key: UniqueKey(),
-              child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: _countAge(birthdayTEC.text) ?? '0',
-                      style: TextStyle(fontSize: 90)),
-                  TextSpan(
-                      text:
-                          '/${avgLife["${locationTEC.text == '' ? 'Taiwan' : locationTEC.text}"]}')
-                ]),
+            SizedBox(
+              width: areaWidth,
+              child: Text(
+                '${nameTEC.text}',
+                style: TextStyle(color: Colors.white),
               ),
             ),
-            Text(
-              '${locationTEC.text} life Exp',
-              style: TextStyle(color: Colors.white),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Wrap(
+                  direction: Axis.vertical,
+                  children: [
+                    MyStatefulWidget(
+                      key: UniqueKey(),
+                      child: RichText(
+                        text: TextSpan(
+                            text: _countAge(birthdayTEC.text) ?? '0',
+                            style: TextStyle(fontSize: 90)),
+                      ),
+                    ),
+                  ],
+                ),
+                Wrap(
+                  direction: Axis.vertical,
+                  children: [
+                    Text(
+                      '/${avgLife["${locationTEC.text == '' ? 'Taiwan' : locationTEC.text}"]}',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              width: areaWidth,
+              child: Text(
+                areaLabel,
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.right,
+              ),
             ),
           ],
         ),
@@ -172,15 +199,21 @@ class _SignUpScreenState extends State<SignUpScreen>
     }
   }
 
-  Widget oneRow(String title, String hint,
-      {double panelWidth,
-      Map<String, dynamic> pickData,
-      bool loop = true,
-      TextEditingController textEditingController}) {
+  Widget oneRow(
+    String title,
+    String hint, {
+    double panelWidth,
+    Map<String, dynamic> pickData,
+    bool loop = true,
+    TextEditingController textEditingController,
+  }) {
     TextEditingController _textEditingController =
         textEditingController ?? TextEditingController();
 
-    double _textFieldWidth = 150;
+    double _textFieldWidth = panelWidth * 0.5;
+
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       constraints: BoxConstraints(maxWidth: panelWidth),
       padding: EdgeInsets.only(right: 70, bottom: 20),
@@ -189,8 +222,9 @@ class _SignUpScreenState extends State<SignUpScreen>
         children: [
           Text(
             title,
-            style: TextStyle(
-                color: kThemeColor, fontSize: 18, fontWeight: FontWeight.bold),
+            style: textTheme.subtitle2.apply(
+              color: kThemeColor,
+            ),
           ),
           Container(
             width: _textFieldWidth,
@@ -210,7 +244,9 @@ class _SignUpScreenState extends State<SignUpScreen>
                   _textEditingController.text = value;
                 });
               },
-              style: TextStyle(color: kThemeColor, fontSize: 18),
+              style: textTheme.subtitle2.apply(
+                color: kThemeColor,
+              ),
               onTap: () async {
                 String selected = await showDragoonCupertinoPicker(
                     context, pickData,
