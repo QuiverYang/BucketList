@@ -1,9 +1,9 @@
-import 'dart:io';
 
 import 'package:bucketlist/screen/component/util_widget.dart';
 import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+
+import 'component/login_main_image.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key, this.title}) : super(key: key);
@@ -15,14 +15,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  Color colorStart = Colors.red;
-  Color colorEnd = Colors.deepPurple;
-  Color _newColor;
 
   @override
   void initState() {
     super.initState();
-    _newColor = colorEnd;
   }
 
   @override
@@ -108,31 +104,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _mainAnim() {
-    if (Theme.of(context).platform == TargetPlatform.android ||
-        Theme.of(context).platform == TargetPlatform.iOS) {
-      return TweenAnimationBuilder(
-          child: Image.asset('images/earthSlow.gif'),
-          tween: ColorTween(begin: colorStart, end: _newColor),
-          duration: Duration(seconds: 1),
-          onEnd: () {
-            setState(() {
-              math.Random().nextInt(255);
-              colorEnd = Color.fromARGB(
-                  200 + math.Random().nextInt(55),
-                  200 + math.Random().nextInt(55),
-                  100 + math.Random().nextInt(50),
-                  200 + math.Random().nextInt(55));
-              _newColor = colorEnd;
-            });
-          },
-          builder: (_, Color color, myChild) {
-            return ColorFiltered(
-              child: myChild,
-              colorFilter: ColorFilter.mode(color, BlendMode.modulate),
-            );
-          });
-    } else {
-      return SizedBox(width: 0,);
-    }
+    return LoginMainImage();
   }
 }
