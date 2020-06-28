@@ -51,7 +51,7 @@ class _BucketListScreenState extends State<BucketListScreen> {
             SliverFixedExtentList(
               itemExtent: 100,
               delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
+                (BuildContext context, int index) {
                   return _buttomExploreArea();
                 },
                 childCount: 1,
@@ -66,23 +66,11 @@ class _BucketListScreenState extends State<BucketListScreen> {
   Widget _buttomExploreArea() {
     return Container(
       margin: EdgeInsets.all(24),
-      child: FlatButton(
-        color: kThemeColor,
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          alignment: Alignment.center,
-          child: Text(
-            kButtonExplorePlan,
-            style: Theme.of(context).textTheme.button,
-          ),
-        ),
+      child: MainButtonFilled(
+        text: kButtonExplorePlan,
         onPressed: () {
           Navigator.pushNamed(context, '/addList');
         },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: BorderSide(color: kThemeColor, width: 2),
-        ),
       ),
     );
   }

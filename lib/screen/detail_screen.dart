@@ -298,27 +298,14 @@ class _DetailScreenState extends State<DetailScreen>
 
   Widget _bottomArea() {
     if (widget.templateMode) {
-      final textTheme = Theme.of(context).textTheme;
       return Container(
         margin: EdgeInsets.only(
             left: pagePadding005, right: pagePadding005, bottom: pagePadding01),
-        child: FlatButton(
-          color: kThemeColor,
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            alignment: Alignment.center,
-            child: Text(
-              kButtonAddPlan,
-              style: textTheme.button,
-            ),
-          ),
+        child: MainButtonFilled(
+          text: kButtonAddPlan,
           onPressed: () {
             Navigator.pushNamed(context, '/bucketList');
           },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            side: BorderSide(color: kThemeColor, width: 2),
-          ),
         ),
       );
     } else {

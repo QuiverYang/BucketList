@@ -1,4 +1,3 @@
-
 import 'package:bucketlist/screen/component/util_widget.dart';
 import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -51,41 +49,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               SizedBox(height: height * 0.06),
-              FlatButton(
-                color: kThemeColor,
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  alignment: Alignment.center,
-                  child: Text(
-                    kSignup,
-                    style: TextStyle(color: kTextColor, fontSize: 20),
-                  ),
-                ),
+              MainButtonFilled(
+                text: kSignup,
                 onPressed: () {
                   Navigator.pushNamed(context, '/signUp');
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  side: BorderSide(color: kThemeColor, width: 2),
-                ),
               ),
               SizedBox(height: 5),
-              FlatButton(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  alignment: Alignment.center,
-                  child: Text(
-                    kLogin,
-                    style: TextStyle(color: kThemeColor, fontSize: 20),
-                  ),
-                ),
+              MainButtonStroked(
+                text: kLogin,
                 onPressed: () {
                   Navigator.pushNamed(context, '/bucketList');
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  side: BorderSide(color: kThemeColor, width: 2),
-                ),
               ),
               SizedBox(height: 15),
               Container(

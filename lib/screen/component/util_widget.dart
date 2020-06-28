@@ -70,3 +70,58 @@ class DragoonAppBg extends StatelessWidget {
     );
   }
 }
+
+class MainButtonStroked extends FlatButton {
+  MainButtonStroked({
+    Key key,
+    String text,
+    VoidCallback onPressed,
+  }) : super(
+          key: key,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            alignment: Alignment.center,
+            child: Text(
+              text,
+              style: TextStyle(color: kThemeColor, fontSize: 20),
+            ),
+          ),
+          onPressed: onPressed,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide(
+              color: kThemeColor,
+              width: 2,
+            ),
+          ),
+        );
+}
+
+class MainButtonFilled extends FlatButton {
+  MainButtonFilled({
+    Key key,
+    String text,
+    VoidCallback onPressed,
+  }) : super(
+    key: key,
+    child: Container(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: TextStyle(color: kTextColor, fontSize: 20),
+      ),
+    ),
+    onPressed: onPressed,
+    color: kThemeColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      side: BorderSide(
+        color: kThemeColor,
+        width: 2,
+      ),
+    ),
+  );
+}
+
+

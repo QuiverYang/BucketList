@@ -76,23 +76,11 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   FlatButton _footerArea(BuildContext context) {
-    return FlatButton(
-      color: kThemeColor,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8),
-        alignment: Alignment.center,
-        child: Text(
-          kDone,
-          style: TextStyle(color: kTextColor, fontSize: 20),
-        ),
-      ),
+   return MainButtonFilled(
+      text: kDone,
       onPressed: () {
-        Navigator.of(context).pushNamed('/bucketList');
+        Navigator.pushNamed(context, '/bucketList');
       },
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        side: BorderSide(color: kThemeColor, width: 2),
-      ),
     );
   }
 
