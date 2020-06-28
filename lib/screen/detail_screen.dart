@@ -238,7 +238,7 @@ class _DetailScreenState extends State<DetailScreen>
                 Theme.of(context).textTheme.subtitle2.apply(color: kThemeColor),
           ),
         ),
-        SizedBox(width: pagePadding005),
+        SizedBox(width: pagePadding005 /2),
         Text(
           value,
           maxLines: 1,
