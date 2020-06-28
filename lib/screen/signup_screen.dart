@@ -19,9 +19,6 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen>
     with SingleTickerProviderStateMixin {
-//  TextEditingController locationTEC;
-//  TextEditingController birthdayTEC;
-//  TextEditingController genderTEC;
   TextEditingController nameTEC;
 
   double width = 0;
@@ -101,40 +98,48 @@ class _SignUpScreenState extends State<SignUpScreen>
 
     final int remainYears = _countRemainYears(_selectedBirthday);
     debugPrint("remainYears=$remainYears");
+
+    String userName;
+    if (nameTEC.text == null || nameTEC.text.length == 0) {
+      userName = kNameHint;
+    } else {
+      userName = nameTEC.text;
+    }
+
     return PanelWidget(
       panelSize: Size(panelWidth, panelWidth * 0.5),
       title: kExpectancy,
       titleTextSize: 14,
       contentWidget: Container(
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          direction: Axis.vertical,
+        child: Stack(
           children: [
             SizedBox(
               width: areaWidth,
               child: Text(
-                '${nameTEC.text}',
+                userName,
                 style: TextStyle(color: Colors.white),
-              ),
-            ),
-            CountWidget(
-              targetNumber: remainYears,
-              fromNumber: 0,
-            ),
-            SizedBox(
-              width: areaWidth,
-              child: Text(
-                '/ ${avgLife["${_selectedLocation ?? kDefaultArea}"]}',
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.right,
               ),
             ),
             SizedBox(
               width: areaWidth,
-              child: Text(
-                areaLabel,
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.right,
+              child: Center(
+                child: CountWidget(
+                  targetNumber: remainYears,
+                  fromNumber: 0,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: SizedBox(
+                width: areaWidth,
+                child: Text(
+                  '/ ${avgLife["${_selectedLocation ?? kDefaultArea}"]}'
+                  '\n'
+                  '$areaLabel',
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.right,
+                ),
               ),
             ),
           ],
@@ -147,10 +152,11 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime(1987),
-        firstDate: DateTime(1911, 8),
-        lastDate: DateTime(2020));
+            context: context,
+            initialDate: DateTime(1987),
+            firstDate: DateTime(1911, 8),
+            lastDate: DateTime(2020)) ??
+        DateTime.now();
     _selectedBirthday = "${picked.year}/${picked.month}/${picked.day}";
     setState(() {});
   }
@@ -322,22 +328,6 @@ class _SignUpScreenState extends State<SignUpScreen>
     }
   }
 
-  // 生日只能是yyyy/mm/dd or yyyymmdd
-  String _countAge(String birthdayStr) {
-    String result;
-    if (birthdayStr == null || birthdayStr == '') return result;
-    var now = DateTime.now();
-    var formatedBirth = birthdayStr.replaceAll('/', '');
-    try {
-      var birthday = DateTime.parse(formatedBirth);
-      var age = now.year - birthday.year;
-      return '$age';
-    } catch (e) {
-      print('birthday parse error $e');
-      return result;
-    }
-  }
-
   int _countRemainYears(String birthdayStr) {
     if (birthdayStr == null || birthdayStr == '') return 0;
     try {
@@ -473,7 +463,7 @@ class _CountWidgetState extends State<CountWidget> {
   bool _disposed = true;
   int _nowFrame = 0;
   int durationMillis = 100;
-  String _displayText = "";
+  String _displayText = "0";
   int _totalAmount = 0;
 
   @override
@@ -495,7 +485,6 @@ class _CountWidgetState extends State<CountWidget> {
     _displayText = "${widget.fromNumber}";
   }
 
-
   @override
   void didUpdateWidget(Widget oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -514,7 +503,8 @@ class _CountWidgetState extends State<CountWidget> {
           // final frame
           _displayText = "${widget.targetNumber}";
         } else {
-          _displayText = "${((_totalAmount / _frameCount) * _nowFrame).toInt()}";
+          _displayText =
+              "${((_totalAmount / _frameCount) * _nowFrame).toInt()}";
         }
         setState(() {});
       });
@@ -522,7 +512,7 @@ class _CountWidgetState extends State<CountWidget> {
     return Container(
       child: Text(
         _displayText,
-        style: Theme.of(context).textTheme.headline2.apply(
+        style: Theme.of(context).textTheme.headline1.apply(
               color: kThemeColor,
             ),
       ),
