@@ -73,49 +73,42 @@ class _DetailScreenState extends State<DetailScreen>
   @override
   Widget build(BuildContext context) {
     final days = Random.secure().nextInt(100);
-    return Scaffold(
-      extendBodyBehindAppBar: true,
+    return DragoonScaffold(
       appBar: DragoonAppBar(title: "Detail Page"),
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          DragoonAppBg(),
-          Container(
-            margin: EdgeInsets.only(
-              top: 16,
-            ),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
+      body: Container(
+        margin: EdgeInsets.only(
+          top: 16,
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _mainImage(),
+                SizedBox(height: pagePadding01),
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _mainImage(),
-                    SizedBox(height: pagePadding01),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(width: pagePadding005),
-                        _titleBox(widget.data.title),
-                        SizedBox(width: pagePadding005),
-                        _takesTimeBox(days),
-                      ],
-                    ),
-                    _categoryInfo(),
-                    SizedBox(height: pagePadding01),
-                    _timeRow("START TIME", _datetimeForDisply(DateTime.now())),
-                    SizedBox(height: 8),
-                    _timeRow("END TIME", _daytimeFromNow(days)),
-                    SizedBox(height: 8),
-                    _memoArea(),
-                    _communityStatus(),
-                    sizedBoxHeight16,
-                    _bottomArea(),
+                    SizedBox(width: pagePadding005),
+                    _titleBox(widget.data.title),
+                    SizedBox(width: pagePadding005),
+                    _takesTimeBox(days),
                   ],
                 ),
-              ),
+                _categoryInfo(),
+                SizedBox(height: pagePadding01),
+                _timeRow("START TIME", _datetimeForDisply(DateTime.now())),
+                SizedBox(height: 8),
+                _timeRow("END TIME", _daytimeFromNow(days)),
+                SizedBox(height: 8),
+                _memoArea(),
+                _communityStatus(),
+                sizedBoxHeight16,
+                _bottomArea(),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
