@@ -74,7 +74,7 @@ class _DetailScreenState extends State<DetailScreen>
   Widget build(BuildContext context) {
     final days = Random.secure().nextInt(100);
     return DragoonScaffold(
-      appBar: DragoonAppBar(title: "Detail Page"),
+      appBar: DragoonAppBar(title: "Plan Detail"),
       body: Container(
         margin: EdgeInsets.only(
           top: 16,
@@ -119,7 +119,7 @@ class _DetailScreenState extends State<DetailScreen>
       direction: Axis.vertical,
       children: [
         Text(
-          'BUCKET TITLE',
+          'PLAN TITLE',
           style: textTheme.subtitle2.apply(color: kThemeColor),
         ),
         Container(
@@ -334,7 +334,7 @@ class _DetailScreenState extends State<DetailScreen>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "${Random.secure().nextInt(50)} PEOPLE DOING THIS BUCKET.\n"
+          "${Random.secure().nextInt(50)} PEOPLE DOING THIS PLAN.\n"
           " ${Random.secure().nextInt(100)} PEOPLE DONE.",
           style: textTheme.subtitle2.apply(
             color: kThemeColor_transparent,

@@ -72,7 +72,7 @@ class _BucketListScreenState extends State<BucketListScreen> {
           padding: EdgeInsets.symmetric(vertical: 8),
           alignment: Alignment.center,
           child: Text(
-            "Explore Buckets",
+            "Explore Plans",
             style: Theme.of(context).textTheme.button,
           ),
         ),
