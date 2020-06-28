@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bucketlist/screen/component/util_widget.dart';
 import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Color colorStart = Colors.red;
   Color colorEnd = Colors.deepPurple;
   Color _newColor;
+
   @override
   void initState() {
     super.initState();
@@ -27,9 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return DragoonScaffold(
-      body: Container(
-        width: double.infinity,
-        child: Padding(
+      body: SingleChildScrollView(
+        child: Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.1),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -49,28 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       colors: [Colors.white, Colors.red, Colors.transparent],
                     )),
                   ),
-                  TweenAnimationBuilder(
-                      child: Image.asset('images/earthSlow.gif'),
-                      tween: ColorTween(begin: colorStart, end: _newColor),
-                      duration: Duration(seconds: 1),
-                      onEnd: () {
-                        setState(() {
-                          math.Random().nextInt(255);
-                          colorEnd = Color.fromARGB(
-                              200 + math.Random().nextInt(55),
-                              200 + math.Random().nextInt(55),
-                              100 + math.Random().nextInt(50),
-                              200 + math.Random().nextInt(55));
-                          _newColor = colorEnd;
-                        });
-                      },
-                      builder: (_, Color color, myChild) {
-                        return ColorFiltered(
-                          child: myChild,
-                          colorFilter:
-                              ColorFilter.mode(color, BlendMode.modulate),
-                        );
-                      }),
+                  _mainAnim(),
                 ],
               ),
               SizedBox(height: height * 0.06),
@@ -124,5 +105,34 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  Widget _mainAnim() {
+    if (Theme.of(context).platform == TargetPlatform.android ||
+        Theme.of(context).platform == TargetPlatform.iOS) {
+      return TweenAnimationBuilder(
+          child: Image.asset('images/earthSlow.gif'),
+          tween: ColorTween(begin: colorStart, end: _newColor),
+          duration: Duration(seconds: 1),
+          onEnd: () {
+            setState(() {
+              math.Random().nextInt(255);
+              colorEnd = Color.fromARGB(
+                  200 + math.Random().nextInt(55),
+                  200 + math.Random().nextInt(55),
+                  100 + math.Random().nextInt(50),
+                  200 + math.Random().nextInt(55));
+              _newColor = colorEnd;
+            });
+          },
+          builder: (_, Color color, myChild) {
+            return ColorFiltered(
+              child: myChild,
+              colorFilter: ColorFilter.mode(color, BlendMode.modulate),
+            );
+          });
+    } else {
+      return SizedBox(width: 0,);
+    }
   }
 }
