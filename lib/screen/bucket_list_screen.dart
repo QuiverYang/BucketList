@@ -34,7 +34,7 @@ class _BucketListScreenState extends State<BucketListScreen> {
   Widget build(BuildContext context) {
     return DragoonScaffold(
       appBar: DragoonAppBar(
-        title: "Admin Quest",
+        title: kAppName,
         leadingWidget: _leadingButton(),
       ),
       body: Container(

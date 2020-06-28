@@ -14,3 +14,5 @@ const List<Color> kSparkaling = [
   Color(0xFFEE9990),
   Color(0xFFDACAF2),
 ];
+
+const kAppName = 'Planner X';

@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Admin Quests',
+                kAppName,
                 style: TextStyle(color: kThemeColor, fontSize: 40),
               ),
               SizedBox(height: height * 0.12),
