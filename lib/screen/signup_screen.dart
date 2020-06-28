@@ -197,8 +197,9 @@ class _SignUpScreenState extends State<SignUpScreen>
             child: TextField(
               controller: _textEditingController,
               decoration: InputDecoration(
+                border: InputBorder.none,
                 filled: true,
-                fillColor: Color.fromARGB(100, 147, 218, 216),
+                fillColor: kThemeColor_transparent,
                 hintText: hint,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                 labelStyle: TextStyle(color: kThemeColor, fontSize: 14),
