@@ -21,6 +21,7 @@ class DragoonAppBar extends AppBar {
           backgroundColor: Color.fromARGB(160, 22, 29, 32),
           leading: leadingWidget,
           bottom: bottom,
+          centerTitle: true,
         );
 }
 

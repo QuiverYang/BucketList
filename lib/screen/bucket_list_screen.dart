@@ -39,7 +39,6 @@ class _BucketListScreenState extends State<BucketListScreen> {
         leadingWidget: _leadingButton(),
       ),
       backgroundColor: Colors.black,
-      drawer: _drawer(),
       floatingActionButton: _fab(),
       body: Stack(
         children: [
@@ -95,11 +94,12 @@ class _BucketListScreenState extends State<BucketListScreen> {
     );
   }
 
+  /// todo: return a beautiful icon
   Widget _leadingButton() {
     return Builder(
       builder: (BuildContext context) {
         return IconButton(
-          icon: const Icon(Icons.menu),
+          icon: const Icon(Icons.ac_unit),
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
@@ -119,25 +119,4 @@ class _BucketListScreenState extends State<BucketListScreen> {
     );
   }
 
-  Widget _drawer() {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Text('Drawer Header'),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-          ),
-          ListTile(
-            title: Text('Item 1'),
-            onTap: () {
-              // TODO
-            },
-          ),
-        ],
-      ),
-    );
-  }
 }
