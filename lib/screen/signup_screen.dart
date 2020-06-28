@@ -47,9 +47,6 @@ class _SignUpScreenState extends State<SignUpScreen>
   @override
   void initState() {
     super.initState();
-//    locationTEC = TextEditingController();
-//    birthdayTEC = TextEditingController();
-//    genderTEC = TextEditingController();
     nameTEC = TextEditingController();
   }
 
@@ -102,8 +99,8 @@ class _SignUpScreenState extends State<SignUpScreen>
   }) {
     final areaWidth = panelWidth - width * 0.2 + 16;
 
-    final remainYears = _countAge(_birthdayDisplayString()) ?? kDefaultAge;
-
+    final int remainYears = _countRemainYears(_selectedBirthday);
+    debugPrint("remainYears=$remainYears");
     return PanelWidget(
       panelSize: Size(panelWidth, panelWidth * 0.5),
       title: kExpectancy,
@@ -120,36 +117,17 @@ class _SignUpScreenState extends State<SignUpScreen>
                 style: TextStyle(color: Colors.white),
               ),
             ),
-//            CountWidget(
-//              targetNumber: _countRemainYears(birthdayTEC.text),
-//              fromNumber: 0,
-//            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Wrap(
-                  direction: Axis.vertical,
-                  children: [
-                    MyStatefulWidget(
-                      key: UniqueKey(),
-                      child: RichText(
-                        text: TextSpan(
-                            text: remainYears, style: TextStyle(fontSize: 90)),
-                      ),
-                    ),
-                  ],
-                ),
-                Wrap(
-                  direction: Axis.vertical,
-                  children: [
-                    Text(
-                      '/${avgLife["${_selectedLocation ?? kDefaultArea}"]}',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
-              ],
+            CountWidget(
+              targetNumber: remainYears,
+              fromNumber: 0,
+            ),
+            SizedBox(
+              width: areaWidth,
+              child: Text(
+                '/ ${avgLife["${_selectedLocation ?? kDefaultArea}"]}',
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.right,
+              ),
             ),
             SizedBox(
               width: areaWidth,
@@ -170,18 +148,14 @@ class _SignUpScreenState extends State<SignUpScreen>
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-      });
+        initialDate: DateTime(1987),
+        firstDate: DateTime(1911, 8),
+        lastDate: DateTime(2020));
+    _selectedBirthday = "${picked.year}/${picked.month}/${picked.day}";
+    setState(() {});
   }
 
-  String _birthdayDisplayString() {
-    return "${selectedDate.year}/${selectedDate.month}/${selectedDate.day}";
-  }
+  String _selectedBirthday;
 
   String _selectedLocation;
 
@@ -262,7 +236,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                     _profileAreaLabel(kBirthday),
                     _profileValueButton(
                       onTap: () => _selectDate(context),
-                      displayText: _birthdayDisplayString(),
+                      displayText: _selectedBirthday,
                       hint: kBirthdayHint,
                     ),
                   ],
@@ -367,8 +341,8 @@ class _SignUpScreenState extends State<SignUpScreen>
   int _countRemainYears(String birthdayStr) {
     if (birthdayStr == null || birthdayStr == '') return 0;
     try {
-      final birthday = DateTime.parse(birthdayStr.replaceAll('/', ''));
-      return DateTime.now().year - birthday.year;
+      final birthYear = int.parse(birthdayStr.split("/")[0]);
+      return DateTime.now().year - birthYear;
     } catch (e) {
       print('birthday parse error $e');
     }
@@ -498,13 +472,14 @@ class _CountWidgetState extends State<CountWidget> {
   int _frameCount = 0;
   bool _disposed = true;
   int _nowFrame = 0;
-  int durationMillis = 200;
+  int durationMillis = 100;
   String _displayText = "";
   int _totalAmount = 0;
 
   @override
   void initState() {
     super.initState();
+    _disposed = false;
   }
 
   @override
@@ -520,9 +495,10 @@ class _CountWidgetState extends State<CountWidget> {
     _displayText = "${widget.fromNumber}";
   }
 
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void didUpdateWidget(Widget oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _reset();
   }
 
@@ -538,7 +514,7 @@ class _CountWidgetState extends State<CountWidget> {
           // final frame
           _displayText = "${widget.targetNumber}";
         } else {
-          _displayText = "${(_totalAmount / _frameCount) * _nowFrame}";
+          _displayText = "${((_totalAmount / _frameCount) * _nowFrame).toInt()}";
         }
         setState(() {});
       });
