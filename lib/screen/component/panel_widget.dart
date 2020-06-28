@@ -15,6 +15,7 @@ class PanelWidget extends StatelessWidget {
   final double titlePaddingY;
   final double titleTextSize;
   final Color panelColor;
+  final Color panelBgColor;
   final Color panelTitleColor;
 
   const PanelWidget({
@@ -32,6 +33,7 @@ class PanelWidget extends StatelessWidget {
     this.titlePaddingY = 4,
     this.titleTextSize = 14,
     this.panelColor = Colors.cyanAccent,
+    this.panelBgColor = Colors.black26,
     this.panelTitleColor = Colors.black,
   }) : super(key: key);
 
@@ -42,6 +44,7 @@ class PanelWidget extends StatelessWidget {
         CustomPaint(
           size: panelSize,
           painter: PanelPainter(
+            panelSize: panelSize,
             panelTitle: title,
             strokeWidth: strokeWidth,
             radius: radius,
@@ -50,6 +53,7 @@ class PanelWidget extends StatelessWidget {
             titlePaddingY: titlePaddingY,
             titleTextSize: titleTextSize,
             panelColor: panelColor,
+            panelBgColor: panelBgColor,
             panelTitleColor: panelTitleColor,
           ),
         ),
@@ -64,6 +68,7 @@ class PanelWidget extends StatelessWidget {
 }
 
 class PanelPainter extends CustomPainter {
+  final Size panelSize;
   final String panelTitle;
   final double strokeWidth;
   final double radius;
@@ -72,9 +77,17 @@ class PanelPainter extends CustomPainter {
   final double titlePaddingY;
   final double titleTextSize;
   final Color panelColor;
+  final Color panelBgColor;
   final Color panelTitleColor;
 
+  Paint _borderPaint = Paint();
+  Paint _bgPaint = Paint();
+  Paint _titleBgPaint = Paint();
+
+  Path _titleBgPath = Path();
+
   PanelPainter({
+    this.panelSize,
     this.panelTitle,
     this.strokeWidth,
     this.radius,
@@ -83,43 +96,60 @@ class PanelPainter extends CustomPainter {
     this.titlePaddingY,
     this.titleTextSize,
     this.panelColor,
+    this.panelBgColor,
     this.panelTitleColor,
-  });
+  }) {
+    /// initiate paint for panel border
+    _borderPaint.color = panelColor;
+    _borderPaint.isAntiAlias = true;
+    _borderPaint.strokeCap = StrokeCap.round;
+    _borderPaint.strokeWidth = strokeWidth;
+    _borderPaint.style = PaintingStyle.stroke;
+
+    /// initiate paint for panel background
+    _bgPaint.color = panelBgColor;
+    _bgPaint.isAntiAlias = true;
+    _bgPaint.strokeCap = StrokeCap.round;
+    _bgPaint.strokeWidth = strokeWidth;
+    _bgPaint.style = PaintingStyle.fill;
+
+    /// initiate paint for panel title background
+    _titleBgPaint.color = panelColor;
+    _titleBgPaint.isAntiAlias = true;
+    _titleBgPaint.strokeCap = StrokeCap.round;
+    _titleBgPaint.strokeWidth = strokeWidth;
+    _titleBgPaint.style = PaintingStyle.fill;
+
+    /// initiate path for panel title background
+    final titleHeight = titleTextSize + titlePaddingY * 2;
+    final titleWidth = panelSize.width * 0.4;
+    final titleWidthShort = titleWidth * 0.85;
+    _titleBgPath.moveTo(0, titleRadius);
+    _titleBgPath.lineTo(titleRadius, 0);
+    _titleBgPath.lineTo(titleWidth, 0);
+    _titleBgPath.lineTo(titleWidthShort, titleHeight);
+    _titleBgPath.lineTo(0, titleHeight);
+    _titleBgPath.close();
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
-    // draw border
-    Paint borderPaint = Paint();
-    borderPaint.color = panelColor;
-    borderPaint.isAntiAlias = true;
-    borderPaint.strokeCap = StrokeCap.round;
-    borderPaint.strokeWidth = strokeWidth;
-    borderPaint.style = PaintingStyle.stroke;
-
-    canvas.drawRRect(
-      RRect.fromLTRBR(
-        0,
-        0,
-        size.width,
-        size.height,
-        Radius.circular(radius),
-      ),
-      borderPaint,
+    final panelMainArea = RRect.fromLTRBR(
+      0,
+      0,
+      size.width,
+      size.height,
+      Radius.circular(radius),
     );
 
+    // draw bg
+    canvas.drawRRect(panelMainArea, _bgPaint);
+
+    // draw border
+    canvas.drawRRect(panelMainArea, _borderPaint);
+
     // draw panel title bg
-    final titleHeight = titleTextSize + titlePaddingY * 2;
-    final titleWidth = size.width * 0.4;
-    final titleWidthShort = titleWidth * 0.85;
-    Path path = Path();
-    path.moveTo(0, titleRadius);
-    path.lineTo(titleRadius, 0);
-    path.lineTo(titleWidth, 0);
-    path.lineTo(titleWidthShort, titleHeight);
-    path.lineTo(0, titleHeight);
-    path.close();
-    borderPaint.style = PaintingStyle.fill;
-    canvas.drawPath(path, borderPaint);
+    canvas.drawPath(_titleBgPath, _titleBgPaint);
 
     // draw panel title
     if (panelTitle != null) {
@@ -138,6 +168,65 @@ class PanelPainter extends CustomPainter {
       tp.layout();
       tp.paint(canvas, Offset(titlePaddingX, titlePaddingY));
     }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class TrapezoidPainter extends CustomPainter {
+  final Size panelSize;
+  final double strokeWidth;
+  final Color panelColor;
+  final Color panelBgColor;
+  final double sharpWidth;
+
+  Paint _borderPaint = Paint();
+  Paint _bgPaint = Paint();
+  Path _bgPath = Path();
+
+  TrapezoidPainter({
+    this.panelSize,
+    this.strokeWidth,
+    this.panelColor,
+    this.panelBgColor,
+    this.sharpWidth,
+  }) {
+    /// initiate paint for panel border
+    _borderPaint.color = panelColor;
+    _borderPaint.isAntiAlias = true;
+    _borderPaint.strokeCap = StrokeCap.round;
+    _borderPaint.strokeWidth = strokeWidth;
+    _borderPaint.style = PaintingStyle.stroke;
+
+    /// initiate paint for panel background
+    _bgPaint.color = panelBgColor;
+    _bgPaint.isAntiAlias = true;
+    _bgPaint.strokeCap = StrokeCap.round;
+    _bgPaint.strokeWidth = strokeWidth;
+    _bgPaint.style = PaintingStyle.fill;
+
+    /// initiate path for panel title background
+    final titleHeight = panelSize.height;
+    final titleWidth = panelSize.width;
+    _bgPath.moveTo(0, 0);
+    _bgPath.lineTo(titleWidth, 0);
+    _bgPath.lineTo(titleWidth, titleHeight - sharpWidth);
+    _bgPath.lineTo(titleWidth - sharpWidth, titleHeight);
+    _bgPath.lineTo(0, titleHeight);
+    _bgPath.close();
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    /// draw panel title bg
+    canvas.drawPath(_bgPath, _bgPaint);
+
+    /// draw border
+    canvas.drawPath(_bgPath, _borderPaint);
+
   }
 
   @override
