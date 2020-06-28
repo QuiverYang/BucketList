@@ -30,42 +30,18 @@ class _SparklingMaskState extends State<SparklingMask> {
 
     /// average small dot
     sparklingChildren.addAll(_dotList(
-      count: 30,
-      yOffset: 0,
-      sizeBase: 10,
+      count: 40,
+      yRatio: 0.8,
+      sizeBase: (_screenWidth * 0.03).toInt(),
       durationMillisOffset: 500,
-    ));
-
-    /// top medium dot
-    sparklingChildren.addAll(_dotList(
-      count: 10,
-      yRatio: 0.1,
-      sizeBase: 50,
-      durationMillisOffset: 1000,
-    ));
-
-    /// bottom medium dot
-    sparklingChildren.addAll(_dotList(
-      count: 10,
-      yOffset: _screenHeight * 0.6,
-      sizeBase: 40,
-      durationMillisOffset: 1000,
-    ));
-
-    /// bottom large dot
-    sparklingChildren.addAll(_dotList(
-      count: 10,
-      yOffset: _screenHeight * 0.8,
-      sizeBase: 60,
-      durationMillisOffset: 2000,
     ));
 
     /// bottom super large dot
     sparklingChildren.addAll(_dotList(
-      count: 5,
-      yOffset: _screenHeight * 0.8,
-      sizeBase: 100,
-      durationMillisOffset: 2000,
+      count: 10,
+      yOffset: _screenHeight * 0.6,
+      sizeBase: (_screenWidth * 0.3).toInt(),
+      durationMillisOffset: 1000,
     ));
 
     return Container(
@@ -108,7 +84,9 @@ class _SparklingMaskState extends State<SparklingMask> {
           left: _randomX(),
           top: _randomY(offset: yOffset) * yRatio,
           child: SparklingDot(
-            dotColor: _randomColor().withAlpha(_randomAlpha()),
+            dotColor: kSparkaling.elementAt(
+                index % kSparkaling.length
+            ).withAlpha(_randomAlpha()),
             dotSize: _randomDotSize(base: sizeBase),
             blinkDuration: _randomDuration(offset: durationMillisOffset),
           ),
