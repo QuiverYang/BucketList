@@ -15,19 +15,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  double width = 0;
+  double height = 0;
+  double pagePadding01 = 0;
+
   @override
   void initState() {
     super.initState();
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    pagePadding01 = width * 0.1;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return DragoonScaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+          padding: EdgeInsets.all(pagePadding01),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
