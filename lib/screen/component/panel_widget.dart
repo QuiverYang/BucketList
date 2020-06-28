@@ -33,7 +33,7 @@ class PanelWidget extends StatelessWidget {
     this.titlePaddingX = 16,
     this.titlePaddingY = 4,
     this.titleTextSize = 14,
-    this.panelColor = Colors.cyanAccent,
+    this.panelColor = kThemeColor,
     this.panelBgColor = Colors.black26,
     this.panelTitleColor = Colors.black,
   }) : super(key: key);
@@ -123,7 +123,7 @@ class PanelPainter extends CustomPainter {
 
     /// initiate path for panel title background
     final titleHeight = titleTextSize + titlePaddingY * 2;
-    final titleWidth = panelSize.width * 0.4;
+    final titleWidth = panelSize.width * 0.5;
     final titleWidthShort = titleWidth * 0.85;
     _titleBgPath.moveTo(0, titleRadius);
     _titleBgPath.lineTo(titleRadius, 0);
