@@ -1,16 +1,32 @@
-# bucketlist
 
-A new Flutter application.
 
-## Getting Started
+# Planner X
 
-This project is a starting point for a Flutter application.
+## About
+Life is short and fragile. Priorities your goals, take notes and remind you to take action on #PlannerX. Live life with no regrets from NOW!
 
-A few resources to get you started if this is your first Flutter project:
+## Source
+- Pitch Vidio https://www.youtube.com/watch?v=RsxFQ0blywk
+- Web https://hl3hl3.github.io/PlannerX/
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Additional Information
+Our idea is inspiring from COVID-19. It has taken thousands of people's lives worldwide in such a short time. Such bad things can always happen without any warning. Moreover, the lifespan of the human being is not quite long. Therefore, we should dedicate ourselves to the goals that we genuinely concerned. PlannerX is aiming to assist people to focus on primary goals. Invest our most valuable property, which is time, on the right thing instead of wasting it on boring, meaningless activities.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tags
+awesome animations,lifespan countdown,gamification design,manage your goals,devote to things meaningful,explore other goals,take actions NOW!
+
+
+
+# Flutter Hack 20
+https://flutterhackathon.com/
+
+## Hackathon Themes this year
+🌎 Saving the Planet (Eco / What we’ve learned during the pandemic).   
+👾 Retro / Cyberpunk Future.   
+
+# Team information
+- Team Name： Dragoon.tw    
+- Flutter Engineers： Rebecca, Jacky    
+- Copywriter： Janet    
+- Duration：2020/6/26 - 2020/6/29    
+
