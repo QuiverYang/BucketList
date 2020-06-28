@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
             image: AssetImage("images/appBg@3x.png"),
             fit: BoxFit.cover,
           ),
-          color: Color.fromARGB(255, 117, 53, 83),
+          color: Colors.black,
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.1),
@@ -45,27 +45,40 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(color: kThemeColor, fontSize: 40),
               ),
               SizedBox(height: height * 0.12),
-              TweenAnimationBuilder(
-                  child: Image.asset('images/earthSlow.gif'),
-                  tween: ColorTween(begin: colorStart, end: _newColor),
-                  duration: Duration(seconds: 1),
-                  onEnd: () {
-                    setState(() {
-                      math.Random().nextInt(255);
-                      colorEnd = Color.fromARGB(
-                          155 + math.Random().nextInt(100),
-                          math.Random().nextInt(200),
-                          math.Random().nextInt(100),
-                          math.Random().nextInt(255));
-                      _newColor = colorEnd;
-                    });
-                  },
-                  builder: (_, Color color, myChild) {
-                    return ColorFiltered(
-                      child: myChild,
-                      colorFilter: ColorFilter.mode(color, BlendMode.modulate),
-                    );
-                  }),
+              Stack(
+                children: [
+                  Container(
+                    width: width * 0.8,
+                    height: width * 0.8,
+                    decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                      colors: [Colors.red, Colors.amber, Colors.transparent],
+                    )),
+                  ),
+                  TweenAnimationBuilder(
+                      child: Image.asset('images/earthSlow.gif'),
+                      tween: ColorTween(begin: colorStart, end: _newColor),
+                      duration: Duration(seconds: 1),
+                      onEnd: () {
+                        setState(() {
+                          math.Random().nextInt(255);
+                          colorEnd = Color.fromARGB(
+                              200 + math.Random().nextInt(55),
+                              200 + math.Random().nextInt(55),
+                              100 + math.Random().nextInt(50),
+                              200 + math.Random().nextInt(55));
+                          _newColor = colorEnd;
+                        });
+                      },
+                      builder: (_, Color color, myChild) {
+                        return ColorFiltered(
+                          child: myChild,
+                          colorFilter:
+                              ColorFilter.mode(color, BlendMode.modulate),
+                        );
+                      }),
+                ],
+              ),
               SizedBox(height: height * 0.06),
               FlatButton(
                 color: kThemeColor,
