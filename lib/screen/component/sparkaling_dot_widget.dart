@@ -30,7 +30,6 @@ class _SparklingDotState extends State<SparklingDot>
     _dispose = true;
   }
 
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -38,6 +37,7 @@ class _SparklingDotState extends State<SparklingDot>
       if (!_dispose) {
         setState(() {
           _visible = !_visible;
+          _leave = !_leave;
         });
       }
     });
@@ -45,6 +45,7 @@ class _SparklingDotState extends State<SparklingDot>
 
   bool _dispose = false;
   bool _visible = false;
+  bool _leave = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +59,22 @@ class _SparklingDotState extends State<SparklingDot>
           });
         }
       },
-      child: Container(
-        width: widget.dotSize,
-        height: widget.dotSize,
-        decoration: BoxDecoration(
-          color: widget.dotColor,
-          shape: BoxShape.circle,
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: widget.blinkDuration * 3),
+        padding: EdgeInsets.only(top: _leave ? widget.dotSize : 0),
+        onEnd: () {
+          setState(() {
+            _leave = !_leave;
+          });
+        },
+
+        child: Container(
+          width: widget.dotSize,
+          height: widget.dotSize,
+          decoration: BoxDecoration(
+            color: widget.dotColor,
+            shape: BoxShape.circle,
+          ),
         ),
       ),
     );
