@@ -35,7 +35,11 @@ class _SparklingDotState extends State<SparklingDot>
   void didChangeDependencies() {
     super.didChangeDependencies();
     Future.delayed(Duration(milliseconds: widget.blinkDuration), () {
-      setState(() {_visible = !_visible; });
+      if (!_dispose) {
+        setState(() {
+          _visible = !_visible;
+        });
+      }
     });
   }
 
