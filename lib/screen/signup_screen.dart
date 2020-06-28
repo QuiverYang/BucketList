@@ -165,19 +165,33 @@ class _SignUpScreenState extends State<SignUpScreen>
       titleTextSize: 14,
       contentWidget: Column(
         children: [
-          oneRow('NAME', 'Dragoon dot TW',
-              panelWidth: panelWidth, textEditingController: nameTEC),
-          oneRow('BIRTHDAY', '1987/11/11',
-              panelWidth: panelWidth, textEditingController: birthdayTEC),
-          oneRow('LOCATION', 'Taiwan',
-              panelWidth: panelWidth,
-              pickData: avgLife,
-              textEditingController: locationTEC),
-          oneRow('GENDER', 'Male',
-              panelWidth: panelWidth,
-              pickData: {'Male': 0, 'Female': 0},
-              loop: false,
-              textEditingController: genderTEC),
+          oneRow(
+            'NAME',
+            'Dragoon dot TW',
+            panelWidth: panelWidth,
+            textEditingController: nameTEC,
+          ),
+          oneRow(
+            'BIRTHDAY',
+            '1987/11/11',
+            panelWidth: panelWidth,
+            textEditingController: birthdayTEC,
+          ),
+          oneRow(
+            'LOCATION',
+            'Taiwan',
+            panelWidth: panelWidth,
+            pickData: avgLife,
+            textEditingController: locationTEC,
+          ),
+          oneRow(
+            'GENDER',
+            'Male',
+            panelWidth: panelWidth,
+            pickData: {'Male': 0, 'Female': 0},
+            loop: false,
+            textEditingController: genderTEC,
+          ),
         ],
       ),
     );
@@ -206,6 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen>
     Map<String, dynamic> pickData,
     bool loop = true,
     TextEditingController textEditingController,
+    ValueChanged<String> onChange,
   }) {
     TextEditingController _textEditingController =
         textEditingController ?? TextEditingController();
@@ -239,11 +254,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 labelStyle: TextStyle(color: kThemeColor, fontSize: 14),
               ),
               textAlign: TextAlign.center,
-              onChanged: (value) {
-                setState(() {
-                  _textEditingController.text = value;
-                });
-              },
+              onChanged: onChange,
               style: textTheme.subtitle2.apply(
                 color: kThemeColor,
               ),
