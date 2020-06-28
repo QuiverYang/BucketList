@@ -58,8 +58,8 @@ class DragoonAppBg extends StatelessWidget {
     return Stack(
       children: [
         Image.asset(
-          "images/appBg@3x.png",
-          fit: BoxFit.cover,
+          "images/appBg.png",
+          fit: BoxFit.fill,
           height: double.infinity,
           width: double.infinity,
         ),
