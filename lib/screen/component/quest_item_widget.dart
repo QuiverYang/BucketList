@@ -9,7 +9,7 @@ import 'panel_widget.dart';
 const int totalProgressCount = 10;
 
 /// 任務列表項目 面板高度
-const double questItemPanelHeight = 90.0 + 24 + 14;
+const double questItemPanelHeight = 90.0 + 24 + 14 + 16;
 
 /// 任務列表項目
 class QuestListItem extends StatelessWidget {

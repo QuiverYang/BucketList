@@ -39,16 +39,32 @@ class _BucketListScreenState extends State<BucketListScreen> {
         leadingWidget: _leadingButton(),
       ),
       backgroundColor: Colors.black,
-      floatingActionButton: _fab(),
       body: Stack(
         children: [
           DragoonAppBg(),
-          Container(
-            margin: EdgeInsets.only(top: 16),
-            child: ListView.separated(
-              itemCount: _listItemCount,
-              separatorBuilder: _listSeperator,
-              itemBuilder: _listItemBuilder,
+          SafeArea(
+            child: Container(
+              margin: EdgeInsets.only(top: 16),
+              child: CustomScrollView(
+                slivers: [
+                  SliverFixedExtentList(
+                    itemExtent: questItemPanelHeight,
+                    delegate: SliverChildBuilderDelegate(
+                      _listItemBuilder,
+                      childCount: _listItemCount,
+                    ),
+                  ),
+                  SliverFixedExtentList(
+                    itemExtent: 100,
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return _buttomExploreArea();
+                      },
+                      childCount: 1,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -56,7 +72,29 @@ class _BucketListScreenState extends State<BucketListScreen> {
     );
   }
 
-  Widget _listSeperator(BuildContext context, int index) => sizedBoxHeight16;
+  Widget _buttomExploreArea() {
+    return Container(
+      margin: EdgeInsets.all(24),
+      child: FlatButton(
+        color: kThemeColor,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          alignment: Alignment.center,
+          child: Text(
+            "Explore Buckets",
+            style: Theme.of(context).textTheme.button,
+          ),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, '/addList');
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          side: BorderSide(color: kThemeColor, width: 2),
+        ),
+      ),
+    );
+  }
 
   String _randomCategory() => questTitles1.keys.elementAt(
         Random.secure().nextInt(questTitles1.length),
@@ -86,6 +124,7 @@ class _BucketListScreenState extends State<BucketListScreen> {
       },
       child: Container(
         color: Colors.transparent,
+        margin: EdgeInsets.only(bottom: 16),
         child: QuestListItem(
           panelSize: Size(_panelWidth, questItemPanelHeight),
           data: data,
@@ -108,15 +147,4 @@ class _BucketListScreenState extends State<BucketListScreen> {
       },
     );
   }
-
-  Widget _fab() {
-    return FloatingActionButton(
-      onPressed: () {
-        Navigator.pushNamed(context, '/addList');
-      },
-      child: Icon(Icons.add),
-      backgroundColor: kThemeColor,
-    );
-  }
-
 }
