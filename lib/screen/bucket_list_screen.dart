@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:bucketlist/screen/add_list_screen.dart';
 import 'package:bucketlist/utilities/fakedata.dart';
+import 'package:bucketlist/utilities/page_route.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constant.dart';
@@ -69,7 +71,13 @@ class _BucketListScreenState extends State<BucketListScreen> {
       child: MainButtonFilled(
         text: kButtonExplorePlan,
         onPressed: () {
-          Navigator.pushNamed(context, '/addList');
+          Navigator.push(
+            context,
+            FadeRoute(
+              routeName: kRouteAddListPage,
+              page: AddListScreen(),
+            ),
+          );
         },
       ),
     );
@@ -95,11 +103,16 @@ class _BucketListScreenState extends State<BucketListScreen> {
     );
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DetailScreen(
-                  data: data,
-                  templateMode: false,
-                )));
+        Navigator.push(
+          context,
+          FadeRoute(
+            routeName: kRouteDetailPage,
+            page: DetailScreen(
+              data: data,
+              templateMode: true,
+            ),
+          ),
+        );
       },
       child: Container(
         color: Colors.transparent,

@@ -304,7 +304,8 @@ class _DetailScreenState extends State<DetailScreen>
         child: MainButtonFilled(
           text: kButtonAddPlan,
           onPressed: () {
-            Navigator.pushNamed(context, '/bucketList');
+            Navigator.popUntil(context, ModalRoute.withName("/bucketList"));
+//            Navigator.popAndPushNamed(context, '/bucketList');
           },
         ),
       );

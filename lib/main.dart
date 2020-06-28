@@ -24,10 +24,10 @@ class MyApp extends StatelessWidget {
               BottomSheetThemeData(backgroundColor: Colors.transparent)),
       routes: {
         '/test': (context) => TestScreen(),
-        '/': (context) => LoginScreen(title: 'Flutter Demo Home Page'),
-        '/signUp': (context) => SignUpScreen(),
-        '/bucketList': (context) => BucketListScreen(),
-        '/addList': (context) => AddListScreen(),
+        kRouteDefault: (context) => LoginScreen(title: 'Flutter Demo Home Page'),
+        kRouteSignupPage: (context) => SignUpScreen(),
+        kRouteBucketListPage: (context) => BucketListScreen(),
+        kRouteAddListPage: (context) => AddListScreen(),
       },
     );
   }

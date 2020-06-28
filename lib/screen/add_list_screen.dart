@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bucketlist/screen/data/quest_data.dart';
 import 'package:bucketlist/utilities/fakedata.dart';
+import 'package:bucketlist/utilities/page_route.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constant.dart';
@@ -111,11 +112,16 @@ class _AddListScreenState extends State<AddListScreen>
     );
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DetailScreen(
-                  data: data,
-                  templateMode: true,
-                )));
+        Navigator.push(
+          context,
+          FadeRoute(
+            routeName: kRouteDetailPage,
+            page: DetailScreen(
+              data: data,
+              templateMode: true,
+            ),
+          ),
+        );
       },
       child: QuestListItem(
         panelSize: Size(_panelWidth, questItemPanelHeight),

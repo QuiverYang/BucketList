@@ -1,7 +1,9 @@
 import 'package:bucketlist/utilities/constant.dart';
 import 'package:bucketlist/utilities/methods.dart';
+import 'package:bucketlist/utilities/page_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'bucket_list_screen.dart';
 import 'component/panel_widget.dart';
 import 'component/util_widget.dart';
 import 'package:bucketlist/utilities/fakedata.dart';
@@ -79,7 +81,13 @@ class _SignUpScreenState extends State<SignUpScreen>
    return MainButtonFilled(
       text: kDone,
       onPressed: () {
-        Navigator.pushNamed(context, '/bucketList');
+        Navigator.pushReplacement(
+          context,
+          FadeRoute(
+            routeName: kRouteBucketListPage,
+            page: BucketListScreen(),
+          ),
+        );
       },
     );
   }

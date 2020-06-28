@@ -1,5 +1,8 @@
+import 'package:bucketlist/screen/bucket_list_screen.dart';
 import 'package:bucketlist/screen/component/util_widget.dart';
+import 'package:bucketlist/screen/signup_screen.dart';
 import 'package:bucketlist/utilities/constant.dart';
+import 'package:bucketlist/utilities/page_route.dart';
 import 'package:flutter/material.dart';
 
 import 'component/login_main_image.dart';
@@ -52,14 +55,26 @@ class _LoginScreenState extends State<LoginScreen> {
               MainButtonFilled(
                 text: kSignup,
                 onPressed: () {
-                  Navigator.pushNamed(context, '/signUp');
+                  Navigator.push(
+                    context,
+                    FadeRoute(
+                      routeName: kRouteSignupPage,
+                      page: SignUpScreen(),
+                    ),
+                  );
                 },
               ),
               SizedBox(height: 5),
               MainButtonStroked(
                 text: kLogin,
                 onPressed: () {
-                  Navigator.pushNamed(context, '/bucketList');
+                  Navigator.push(
+                    context,
+                    FadeRoute(
+                      routeName: kRouteBucketListPage,
+                      page: BucketListScreen(),
+                    ),
+                  );
                 },
               ),
               SizedBox(height: 15),

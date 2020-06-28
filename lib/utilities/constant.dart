@@ -63,5 +63,11 @@ const String kLocationHint = "----";
 const String kGender = "GENDER";
 const String kGenderHint = "-";
 
+const String kRouteDefault = "/";
+const String kRouteSignupPage = "/signUp";
+const String kRouteBucketListPage = "/bucketList";
+const String kRouteAddListPage = "/addList";
+const String kRouteDetailPage = "/detail";
+
 
 
