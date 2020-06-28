@@ -175,3 +175,62 @@ class PanelPainter extends CustomPainter {
     return true;
   }
 }
+
+class TrapezoidPainter extends CustomPainter {
+  final Size panelSize;
+  final double strokeWidth;
+  final Color panelColor;
+  final Color panelBgColor;
+  final double sharpWidth;
+
+  Paint _borderPaint = Paint();
+  Paint _bgPaint = Paint();
+  Path _bgPath = Path();
+
+  TrapezoidPainter({
+    this.panelSize,
+    this.strokeWidth,
+    this.panelColor,
+    this.panelBgColor,
+    this.sharpWidth,
+  }) {
+    /// initiate paint for panel border
+    _borderPaint.color = panelColor;
+    _borderPaint.isAntiAlias = true;
+    _borderPaint.strokeCap = StrokeCap.round;
+    _borderPaint.strokeWidth = strokeWidth;
+    _borderPaint.style = PaintingStyle.stroke;
+
+    /// initiate paint for panel background
+    _bgPaint.color = panelBgColor;
+    _bgPaint.isAntiAlias = true;
+    _bgPaint.strokeCap = StrokeCap.round;
+    _bgPaint.strokeWidth = strokeWidth;
+    _bgPaint.style = PaintingStyle.fill;
+
+    /// initiate path for panel title background
+    final titleHeight = panelSize.height;
+    final titleWidth = panelSize.width;
+    _bgPath.moveTo(0, 0);
+    _bgPath.lineTo(titleWidth, 0);
+    _bgPath.lineTo(titleWidth, titleHeight - sharpWidth);
+    _bgPath.lineTo(titleWidth - sharpWidth, titleHeight);
+    _bgPath.lineTo(0, titleHeight);
+    _bgPath.close();
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    /// draw panel title bg
+    canvas.drawPath(_bgPath, _bgPaint);
+
+    /// draw border
+    canvas.drawPath(_bgPath, _borderPaint);
+
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}

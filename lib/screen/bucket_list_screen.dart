@@ -79,9 +79,11 @@ class _BucketListScreenState extends State<BucketListScreen> {
     );
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => DetailScreen(data: data))
-        );
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DetailScreen(
+                  data: data,
+                  templateMode: false,
+                )));
       },
       child: Container(
         color: Colors.transparent,
