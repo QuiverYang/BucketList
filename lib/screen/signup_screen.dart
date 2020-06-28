@@ -9,6 +9,7 @@ import 'package:bucketlist/utilities/fakedata.dart';
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key key, this.title}) : super(key: key);
   final String title;
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -19,6 +20,18 @@ class _SignUpScreenState extends State<SignUpScreen>
   TextEditingController birthdayTEC;
   TextEditingController genderTEC;
   TextEditingController nameTEC;
+
+  double width = 0;
+  double height = 0;
+  double panelWidth = 0;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    panelWidth = MediaQuery.of(context).size.width - 48;
+  }
 
   @override
   void initState() {
@@ -31,10 +44,6 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
-    final panelWidth = MediaQuery.of(context).size.width - 48;
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: DragoonAppBar(
@@ -49,90 +58,100 @@ class _SignUpScreenState extends State<SignUpScreen>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  PanelWidget(
-                    panelSize: Size(panelWidth, panelWidth * 0.85),
-                    title: "PROFILE",
-                    titleTextSize: 14,
-                    contentWidget: Column(
-                      children: [
-                        oneRow('NAME', 'Dragoon dot TW',
-                            panelWidth: panelWidth,
-                            textEditingController: nameTEC),
-                        oneRow('BIRTHDAY', '1987/11/11',
-                            panelWidth: panelWidth,
-                            textEditingController: birthdayTEC),
-                        oneRow('LOCATION', 'Taiwan',
-                            panelWidth: panelWidth,
-                            pickData: avgLife,
-                            textEditingController: locationTEC),
-                        oneRow('GENDER', 'Male',
-                            panelWidth: panelWidth,
-                            pickData: {'Male': 0, 'Female': 0},
-                            loop: false,
-                            textEditingController: genderTEC),
-                      ],
-                    ),
-                  ),
+                  _profileArea(),
                   SizedBox(height: 20),
-                  PanelWidget(
-                    panelSize: Size(panelWidth, panelWidth * 0.5),
-                    title: "EXPECTANCY",
-                    titleTextSize: 14,
-                    contentWidget: Container(
-                      width: panelWidth - width * 0.2 + 16,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '${nameTEC.text}',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          MyStatefulWidget(
-                            key: UniqueKey(),
-                            child: RichText(
-                              text: TextSpan(children: [
-                                TextSpan(
-                                    text: _countAge(birthdayTEC.text) ?? '0',
-                                    style: TextStyle(fontSize: 90)),
-                                TextSpan(
-                                    text:
-                                        '/${avgLife["${locationTEC.text == '' ? 'Taiwan' : locationTEC.text}"]}')
-                              ]),
-                            ),
-                          ),
-                          Text(
-                            '${locationTEC.text} life Exp',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  _expectancyArea(),
                   SizedBox(height: 20),
-                  FlatButton(
-                    color: kThemeColor,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Done',
-                        style: TextStyle(color: kTextColor, fontSize: 20),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/bucketList');
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      side: BorderSide(color: kThemeColor, width: 2),
-                    ),
-                  ),
+                  _footerArea(context),
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  FlatButton _footerArea(BuildContext context) {
+    return FlatButton(
+      color: kThemeColor,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 8),
+        alignment: Alignment.center,
+        child: Text(
+          'Done',
+          style: TextStyle(color: kTextColor, fontSize: 20),
+        ),
+      ),
+      onPressed: () {
+        Navigator.of(context).pushNamed('/bucketList');
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        side: BorderSide(color: kThemeColor, width: 2),
+      ),
+    );
+  }
+
+  PanelWidget _expectancyArea() {
+    return PanelWidget(
+      panelSize: Size(panelWidth, panelWidth * 0.5),
+      title: "EXPECTANCY",
+      titleTextSize: 14,
+      contentWidget: Container(
+        width: panelWidth - width * 0.2 + 16,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              '${nameTEC.text}',
+              style: TextStyle(color: Colors.white),
+            ),
+            MyStatefulWidget(
+              key: UniqueKey(),
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: _countAge(birthdayTEC.text) ?? '0',
+                      style: TextStyle(fontSize: 90)),
+                  TextSpan(
+                      text:
+                          '/${avgLife["${locationTEC.text == '' ? 'Taiwan' : locationTEC.text}"]}')
+                ]),
+              ),
+            ),
+            Text(
+              '${locationTEC.text} life Exp',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  PanelWidget _profileArea() {
+    return PanelWidget(
+      panelSize: Size(panelWidth, panelWidth * 0.85),
+      title: "PROFILE",
+      titleTextSize: 14,
+      contentWidget: Column(
+        children: [
+          oneRow('NAME', 'Dragoon dot TW',
+              panelWidth: panelWidth, textEditingController: nameTEC),
+          oneRow('BIRTHDAY', '1987/11/11',
+              panelWidth: panelWidth, textEditingController: birthdayTEC),
+          oneRow('LOCATION', 'Taiwan',
+              panelWidth: panelWidth,
+              pickData: avgLife,
+              textEditingController: locationTEC),
+          oneRow('GENDER', 'Male',
+              panelWidth: panelWidth,
+              pickData: {'Male': 0, 'Female': 0},
+              loop: false,
+              textEditingController: genderTEC),
+        ],
       ),
     );
   }
@@ -211,6 +230,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 class MyStatefulWidget extends StatefulWidget {
   MyStatefulWidget({Key key, this.child}) : super(key: key);
   final child;
+
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
@@ -220,6 +240,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
   Widget contentWidget;
+
   @override
   void initState() {
     super.initState();
