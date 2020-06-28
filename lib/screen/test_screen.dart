@@ -12,13 +12,15 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("${widget.title ?? 'test'}")),
-      body: Center(
-        child: RaisedButton(
-          child: Text('go to bucket list page'),
-          onPressed: () {
-            Navigator.pushNamed(context, '/');
-          },
-        ),
+      body: Column(
+        children: [
+          RaisedButton(
+            child: Text('go to bucket list page'),
+            onPressed: () {
+              Navigator.pushNamed(context, '/');
+            },
+          ),
+        ],
       ),
     );
   }

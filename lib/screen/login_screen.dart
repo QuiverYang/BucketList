@@ -1,4 +1,3 @@
-import 'package:bucketlist/screen/component/util_widget.dart';
 import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -13,12 +12,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Color colorStart = Colors.red;
+  Color colorEnd = Colors.deepPurple;
+  Color _newColor;
+  @override
+  void initState() {
+    super.initState();
+    _newColor = colorEnd;
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return DragoonScaffold(
+    return Scaffold(
       body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/appBg@3x.png"),
+            fit: BoxFit.cover,
+          ),
+          color: Colors.black,
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.1),
           child: Column(
@@ -29,18 +45,40 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(color: kThemeColor, fontSize: 40),
               ),
               SizedBox(height: height * 0.12),
-              TweenAnimationBuilder(
-                  duration: Duration(seconds: 3),
-                  tween: Tween<double>(begin: 0, end: 2 * math.pi),
-                  builder: (_, double angle, __) {
-                    return Transform.rotate(
-                      angle: angle,
-                      child: Image.asset(
-                        'images/earth@3x.png',
-                        width: width * 0.7,
-                      ),
-                    );
-                  }),
+              Stack(
+                children: [
+                  Container(
+                    width: width * 0.8,
+                    height: width * 0.8,
+                    decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                      colors: [Colors.white, Colors.red, Colors.transparent],
+                    )),
+                  ),
+                  TweenAnimationBuilder(
+                      child: Image.asset('images/earthSlow.gif'),
+                      tween: ColorTween(begin: colorStart, end: _newColor),
+                      duration: Duration(seconds: 1),
+                      onEnd: () {
+                        setState(() {
+                          math.Random().nextInt(255);
+                          colorEnd = Color.fromARGB(
+                              200 + math.Random().nextInt(55),
+                              200 + math.Random().nextInt(55),
+                              100 + math.Random().nextInt(50),
+                              200 + math.Random().nextInt(55));
+                          _newColor = colorEnd;
+                        });
+                      },
+                      builder: (_, Color color, myChild) {
+                        return ColorFiltered(
+                          child: myChild,
+                          colorFilter:
+                              ColorFilter.mode(color, BlendMode.modulate),
+                        );
+                      }),
+                ],
+              ),
               SizedBox(height: height * 0.06),
               FlatButton(
                 color: kThemeColor,
