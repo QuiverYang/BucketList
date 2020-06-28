@@ -55,7 +55,7 @@ Future<String> showDragoonCupertinoPicker(
                 // 半透明，把material app 的themeData-BottomSheetThemeData改成透明
                 backgroundColor: Color.fromARGB(200, 0, 0, 0),
                 children: options,
-                itemExtent: 30, //height of each item
+                itemExtent: 40, //height of each item
                 looping: loop,
                 onSelectedItemChanged: (int index) {
                   selected = dataList[index];

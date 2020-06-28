@@ -12,6 +12,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Color colorStart = Colors.red;
+  Color colorEnd = Colors.deepPurple;
+  Color _newColor;
+  @override
+  void initState() {
+    super.initState();
+    _newColor = colorEnd;
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -37,15 +46,24 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: height * 0.12),
               TweenAnimationBuilder(
-                  duration: Duration(seconds: 3),
-                  tween: Tween<double>(begin: 0, end: 2 * math.pi),
-                  builder: (_, double angle, __) {
-                    return Transform.rotate(
-                      angle: angle,
-                      child: Image.asset(
-                        'images/earth@3x.png',
-                        width: width * 0.7,
-                      ),
+                  child: Image.asset('images/earthSlow.gif'),
+                  tween: ColorTween(begin: colorStart, end: _newColor),
+                  duration: Duration(seconds: 1),
+                  onEnd: () {
+                    setState(() {
+                      math.Random().nextInt(255);
+                      colorEnd = Color.fromARGB(
+                          math.Random().nextInt(255),
+                          math.Random().nextInt(255),
+                          math.Random().nextInt(255),
+                          math.Random().nextInt(255));
+                      _newColor = colorEnd;
+                    });
+                  },
+                  builder: (_, Color color, myChild) {
+                    return ColorFiltered(
+                      child: myChild,
+                      colorFilter: ColorFilter.mode(color, BlendMode.modulate),
                     );
                   }),
               SizedBox(height: height * 0.06),
