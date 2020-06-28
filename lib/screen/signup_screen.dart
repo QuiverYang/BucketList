@@ -40,62 +40,56 @@ class _SignUpScreenState extends State<SignUpScreen>
       appBar: DragoonAppBar(
         title: 'Sign up',
       ),
-      body: Scaffold(
-        body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("images/appBg@3x.png"),
-              fit: BoxFit.cover,
-            ),
-            color: Color.fromARGB(255, 117, 53, 83),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                PanelWidget(
-                  panelSize: Size(panelWidth, panelWidth * 0.85),
-                  title: "PROFILE",
-                  titleTextSize: 14,
-                  contentWidget: Column(
-                    children: [
-                      oneRow('NAME', 'Dragoon dot TW',
-                          panelWidth: panelWidth,
-                          textEditingController: nameTEC),
-                      oneRow('BIRTHDAY', '1987/11/11',
-                          panelWidth: panelWidth,
-                          textEditingController: birthdayTEC),
-                      oneRow('LOCATION', 'Taiwan',
-                          panelWidth: panelWidth,
-                          pickData: avgLife,
-                          textEditingController: locationTEC),
-                      oneRow('GENDER', 'Male',
-                          panelWidth: panelWidth,
-                          pickData: {'Male': 0, 'Female': 0},
-                          loop: false,
-                          textEditingController: genderTEC),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                PanelWidget(
-                  panelSize: Size(panelWidth, panelWidth * 0.5),
-                  title: "EXPECTANCY",
-                  titleTextSize: 14,
-                  contentWidget: Container(
-                    width: panelWidth - width * 0.2 + 16,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+      body: DragoonScaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  PanelWidget(
+                    panelSize: Size(panelWidth, panelWidth * 0.85),
+                    title: "PROFILE",
+                    titleTextSize: 14,
+                    contentWidget: Column(
                       children: [
-                        Text(
-                          '${nameTEC.text}',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Expanded(
-                          child: MyStatefulWidget(
+                        oneRow('NAME', 'Dragoon dot TW',
+                            panelWidth: panelWidth,
+                            textEditingController: nameTEC),
+                        oneRow('BIRTHDAY', '1987/11/11',
+                            panelWidth: panelWidth,
+                            textEditingController: birthdayTEC),
+                        oneRow('LOCATION', 'Taiwan',
+                            panelWidth: panelWidth,
+                            pickData: avgLife,
+                            textEditingController: locationTEC),
+                        oneRow('GENDER', 'Male',
+                            panelWidth: panelWidth,
+                            pickData: {'Male': 0, 'Female': 0},
+                            loop: false,
+                            textEditingController: genderTEC),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  PanelWidget(
+                    panelSize: Size(panelWidth, panelWidth * 0.5),
+                    title: "EXPECTANCY",
+                    titleTextSize: 14,
+                    contentWidget: Container(
+                      width: panelWidth - width * 0.2 + 16,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '${nameTEC.text}',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          MyStatefulWidget(
+                            key: UniqueKey(),
                             child: RichText(
                               text: TextSpan(children: [
                                 TextSpan(
@@ -107,35 +101,35 @@ class _SignUpScreenState extends State<SignUpScreen>
                               ]),
                             ),
                           ),
-                        ),
-                        Text(
-                          '${locationTEC.text} life Exp',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+                          Text(
+                            '${locationTEC.text} life Exp',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-                FlatButton(
-                  color: kThemeColor,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Done',
-                      style: TextStyle(color: kTextColor, fontSize: 20),
+                  SizedBox(height: 20),
+                  FlatButton(
+                    color: kThemeColor,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Done',
+                        style: TextStyle(color: kTextColor, fontSize: 20),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/bucketList');
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: BorderSide(color: kThemeColor, width: 2),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/bucketList');
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    side: BorderSide(color: kThemeColor, width: 2),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -235,7 +229,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
       vsync: this,
     )..repeat(reverse: true);
     _offsetAnimation = Tween<Offset>(
-      begin: Offset(0, -1.5),
+      begin: Offset(0, -0.5),
       end: const Offset(0, 0.0),
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -245,8 +239,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
