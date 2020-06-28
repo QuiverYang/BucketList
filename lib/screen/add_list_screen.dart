@@ -43,19 +43,13 @@ class _AddListScreenState extends State<AddListScreen>
     _changeCategory(0);
   }
 
-  int _categoryItemCount = 0;
-  String _category;
-
   _changeCategory(int index) {
     _nowCategory = index;
-    _category = questTitles1.keys.elementAt(_nowCategory);
-    _categoryItemCount = questTitles1[_category].length;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
+    return DragoonScaffold(
       appBar: DragoonAppBar(
         title: "Templates",
         bottom: TabBar(
@@ -73,22 +67,16 @@ class _AddListScreenState extends State<AddListScreen>
           },
         ),
       ),
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          DragoonAppBg(),
-          Container(
-            margin: EdgeInsets.only(top: 16),
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: _tabController.length,
-              itemBuilder: _categoryListPageBuilder,
-              onPageChanged: (index) {
-                _tabController.index = index;
-              },
-            ),
-          ),
-        ],
+      body: Container(
+        margin: EdgeInsets.only(top: 16),
+        child: PageView.builder(
+          controller: _pageController,
+          itemCount: _tabController.length,
+          itemBuilder: _categoryListPageBuilder,
+          onPageChanged: (index) {
+            _tabController.index = index;
+          },
+        ),
       ),
     );
   }
