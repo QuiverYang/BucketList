@@ -51,7 +51,7 @@ class _AddListScreenState extends State<AddListScreen>
   Widget build(BuildContext context) {
     return DragoonScaffold(
       appBar: DragoonAppBar(
-        title: "Templates",
+        title: kExplorePageTitle,
         bottom: TabBar(
           isScrollable: true,
           tabs: categories.map(_categoryTab).toList(),
@@ -105,7 +105,7 @@ class _AddListScreenState extends State<AddListScreen>
       category: category,
       title: questTitles1[category].elementAt(index),
       iconData: null,
-      deadline: "---- / -- / --",
+      deadline: kDefaultDate,
       progressTotal: totalProgressCount,
       progressNow: Random.secure().nextInt(totalProgressCount),
     );

@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.symmetric(vertical: 8),
                   alignment: Alignment.center,
                   child: Text(
-                    'Sign up',
+                    kSignup,
                     style: TextStyle(color: kTextColor, fontSize: 20),
                   ),
                 ),
@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.symmetric(vertical: 8),
                   alignment: Alignment.center,
                   child: Text(
-                    'Login',
+                    kLogin,
                     style: TextStyle(color: kThemeColor, fontSize: 20),
                   ),
                 ),
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 width: double.infinity,
                 child: Text(
-                  'Forgot Account??',
+                  kForgotAccount,
                   style: TextStyle(color: kThemeColor),
                   textAlign: TextAlign.right,
                 ),

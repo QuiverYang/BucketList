@@ -50,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   Widget build(BuildContext context) {
     return DragoonScaffold(
       appBar: DragoonAppBar(
-        title: 'Sign up',
+        title: kSignupPageTitle,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -63,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 _profileArea(),
                 SizedBox(height: 20),
                 _expectancyArea(
-                  areaLabel: '${locationTEC.text} life Exp',
+                  areaLabel: '${locationTEC.text} $kLifeExp',
                 ),
                 SizedBox(height: 20),
                 _footerArea(context),
@@ -82,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         padding: EdgeInsets.symmetric(vertical: 8),
         alignment: Alignment.center,
         child: Text(
-          'Done',
+          kDone,
           style: TextStyle(color: kTextColor, fontSize: 20),
         ),
       ),
@@ -102,7 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen>
     final areaWidth = panelWidth - width * 0.2 + 16;
     return PanelWidget(
       panelSize: Size(panelWidth, panelWidth * 0.5),
-      title: "EXPECTANCY",
+      title: kExpectancy,
       titleTextSize: 14,
       contentWidget: Container(
         child: Wrap(
@@ -127,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                       key: UniqueKey(),
                       child: RichText(
                         text: TextSpan(
-                            text: _countAge(birthdayTEC.text) ?? '0',
+                            text: _countAge(birthdayTEC.text) ?? kDefaultAge,
                             style: TextStyle(fontSize: 90)),
                       ),
                     ),
@@ -137,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                   direction: Axis.vertical,
                   children: [
                     Text(
-                      '/${avgLife["${locationTEC.text == '' ? 'Taiwan' : locationTEC.text}"]}',
+                      '/${avgLife["${locationTEC.text == '' ? kDefaultArea : locationTEC.text}"]}',
                       style: TextStyle(color: Colors.white),
                     ),
                   ],
@@ -161,34 +161,34 @@ class _SignUpScreenState extends State<SignUpScreen>
   PanelWidget _profileArea() {
     return PanelWidget(
       panelSize: Size(panelWidth, panelWidth * 0.85),
-      title: "PROFILE",
+      title: kProfile,
       titleTextSize: 14,
       contentWidget: Column(
         children: [
           oneRow(
-            'NAME',
-            'Dragoon dot TW',
+            kName,
+            kNameHint,
             panelWidth: panelWidth,
             textEditingController: nameTEC,
           ),
           oneRow(
-            'BIRTHDAY',
-            '1987/11/11',
+            kBirthday,
+            kBirthdayHint,
             panelWidth: panelWidth,
             textEditingController: birthdayTEC,
           ),
           oneRow(
-            'LOCATION',
-            'Taiwan',
+            kLocation,
+            kLocationHint,
             panelWidth: panelWidth,
             pickData: avgLife,
             textEditingController: locationTEC,
           ),
           oneRow(
-            'GENDER',
-            'Male',
+            kGender,
+            kGenderHint,
             panelWidth: panelWidth,
-            pickData: {'Male': 0, 'Female': 0},
+            pickData: {kGenderMale: 0, kGenderFemale: 0},
             loop: false,
             textEditingController: genderTEC,
           ),

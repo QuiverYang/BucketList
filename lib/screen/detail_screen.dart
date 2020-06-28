@@ -74,7 +74,7 @@ class _DetailScreenState extends State<DetailScreen>
   Widget build(BuildContext context) {
     final days = Random.secure().nextInt(100);
     return DragoonScaffold(
-      appBar: DragoonAppBar(title: "Plan Detail"),
+      appBar: DragoonAppBar(title: kDetailPageTitle),
       body: Container(
         margin: EdgeInsets.only(
           top: 16,
@@ -97,9 +97,9 @@ class _DetailScreenState extends State<DetailScreen>
                 ),
                 _categoryInfo(),
                 SizedBox(height: pagePadding01),
-                _timeRow("START TIME", _datetimeForDisply(DateTime.now())),
+                _timeRow(kStartTime, _datetimeForDisply(DateTime.now())),
                 SizedBox(height: 8),
-                _timeRow("END TIME", _daytimeFromNow(days)),
+                _timeRow(kEndTime, _daytimeFromNow(days)),
                 SizedBox(height: 8),
                 _memoArea(),
                 _communityStatus(),
@@ -119,7 +119,7 @@ class _DetailScreenState extends State<DetailScreen>
       direction: Axis.vertical,
       children: [
         Text(
-          'PLAN TITLE',
+          kPlanTitle,
           style: textTheme.subtitle2.apply(color: kThemeColor),
         ),
         Container(
@@ -167,7 +167,7 @@ class _DetailScreenState extends State<DetailScreen>
           width: areaWidthTimes,
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
           child: Text(
-            'TAKES TIME',
+            kTakesTime,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.subtitle2,
           ),
@@ -196,7 +196,7 @@ class _DetailScreenState extends State<DetailScreen>
                 ),
               ),
               Text(
-                'DAYS',
+                kDays,
                 style: textTheme.subtitle2.apply(color: kThemeColor),
               ),
             ],
@@ -260,11 +260,11 @@ class _DetailScreenState extends State<DetailScreen>
           Wrap(
             children: [
               Text(
-                "MEMO",
+                kMemo,
                 style: textTheme.subtitle2.apply(color: kThemeColor),
               ),
               Text(
-                " (only you can see)",
+                kMemoDescription,
                 style:
                     textTheme.subtitle2.apply(color: kThemeColor_transparent),
               )
@@ -308,7 +308,7 @@ class _DetailScreenState extends State<DetailScreen>
             padding: EdgeInsets.symmetric(vertical: 8),
             alignment: Alignment.center,
             child: Text(
-              "Let's Do This!",
+              kButtonAddPlan,
               style: textTheme.button,
             ),
           ),
@@ -334,8 +334,8 @@ class _DetailScreenState extends State<DetailScreen>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "${Random.secure().nextInt(50)} PEOPLE DOING THIS PLAN.\n"
-          " ${Random.secure().nextInt(100)} PEOPLE DONE.",
+          "${Random.secure().nextInt(50)} $kPplDoing\n"
+          " ${Random.secure().nextInt(100)} $kPplDone",
           style: textTheme.subtitle2.apply(
             color: kThemeColor_transparent,
           ),
