@@ -1,12 +1,13 @@
-import 'package:bucketlist/utilities/constant.dart';
-import 'package:bucketlist/utilities/methods.dart';
-import 'package:bucketlist/utilities/page_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'bucket_list_screen.dart';
 import 'component/panel_widget.dart';
 import 'component/util_widget.dart';
-import 'package:bucketlist/utilities/fakedata.dart';
+
+import '../utilities/page_route.dart';
+import '../utilities/constant.dart';
+import '../utilities/fakedata.dart';
+import '../utilities/methods.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key key, this.title}) : super(key: key);
@@ -78,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   FlatButton _footerArea(BuildContext context) {
-   return MainButtonFilled(
+    return MainButtonFilled(
       text: kDone,
       onPressed: () {
         Navigator.pushReplacement(

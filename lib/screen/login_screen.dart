@@ -1,8 +1,8 @@
-import 'package:bucketlist/screen/bucket_list_screen.dart';
-import 'package:bucketlist/screen/component/util_widget.dart';
-import 'package:bucketlist/screen/signup_screen.dart';
-import 'package:bucketlist/utilities/constant.dart';
-import 'package:bucketlist/utilities/page_route.dart';
+import '../screen/bucket_list_screen.dart';
+import '../screen/component/util_widget.dart';
+import '../screen/signup_screen.dart';
+import '../utilities/constant.dart';
+import '../utilities/page_route.dart';
 import 'package:flutter/material.dart';
 
 import 'component/login_main_image.dart';

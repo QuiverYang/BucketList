@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bucketlist/screen/data/quest_data.dart';
+import '../screen/data/quest_data.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constant.dart';

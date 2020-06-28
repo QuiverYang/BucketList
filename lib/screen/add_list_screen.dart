@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:bucketlist/screen/data/quest_data.dart';
-import 'package:bucketlist/utilities/fakedata.dart';
-import 'package:bucketlist/utilities/page_route.dart';
+import 'package:plannerx/screen/data/quest_data.dart';
+import 'package:plannerx/utilities/fakedata.dart';
+import 'package:plannerx/utilities/page_route.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constant.dart';

@@ -1,4 +1,4 @@
-import 'package:bucketlist/utilities/constant.dart';
+import '../../utilities/constant.dart';
 import 'package:flutter/material.dart';
 
 class PanelWidget extends StatelessWidget {

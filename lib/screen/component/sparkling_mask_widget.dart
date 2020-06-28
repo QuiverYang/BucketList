@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:bucketlist/screen/component/sparkaling_dot_widget.dart';
-import 'package:bucketlist/utilities/constant.dart';
+import '../../screen/component/sparkaling_dot_widget.dart';
+import '../../utilities/constant.dart';
 import 'package:flutter/material.dart';
 
 class SparklingMask extends StatefulWidget {

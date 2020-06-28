@@ -1,5 +1,5 @@
-import 'package:bucketlist/screen/component/progress_dot_widget.dart';
-import 'package:bucketlist/screen/data/quest_data.dart';
+import '../../screen/component/progress_dot_widget.dart';
+import '../../screen/data/quest_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../utilities/constant.dart';

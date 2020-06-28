@@ -1,4 +1,4 @@
-import 'package:bucketlist/utilities/fakedata.dart';
+import 'package:plannerx/utilities/fakedata.dart';
 import 'package:flutter/cupertino.dart';
 
 class QuestData {

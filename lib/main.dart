@@ -1,10 +1,10 @@
-import 'package:bucketlist/screen/add_list_screen.dart';
-import 'package:bucketlist/screen/bucket_list_screen.dart';
-import 'package:bucketlist/screen/signup_screen.dart';
-import 'package:bucketlist/screen/login_screen.dart';
-import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
+import 'screen/add_list_screen.dart';
+import 'screen/bucket_list_screen.dart';
+import 'screen/login_screen.dart';
+import 'screen/signup_screen.dart';
 import 'screen/test_screen.dart';
+import 'utilities/constant.dart';
 
 void main() {
   runApp(MyApp());
