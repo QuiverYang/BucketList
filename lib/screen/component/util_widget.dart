@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utilities/constant.dart';
+import 'sparkling_mask_widget.dart';
 
 const Widget sizedBoxHeight16 = const SizedBox(height: 16);
 
@@ -25,15 +26,21 @@ class DragoonAppBar extends AppBar {
         );
 }
 
-
 class DragoonAppBg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      "images/appBg@3x.png",
-      fit: BoxFit.cover,
-      height: double.infinity,
-      width: double.infinity,
+    return Stack(
+      children: [
+        Image.asset(
+          "images/appBg@3x.png",
+          fit: BoxFit.cover,
+          height: double.infinity,
+          width: double.infinity,
+        ),
+        SparklingMask(
+          size: MediaQuery.of(context).size,
+        ),
+      ],
     );
   }
 }
