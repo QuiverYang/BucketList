@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: width * 0.8,
                     decoration: BoxDecoration(
                         gradient: RadialGradient(
-                      colors: [Colors.red, Colors.amber, Colors.transparent],
+                      colors: [Colors.white, Colors.red, Colors.transparent],
                     )),
                   ),
                   TweenAnimationBuilder(
