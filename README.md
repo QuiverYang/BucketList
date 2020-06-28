@@ -2,6 +2,15 @@
 
 # Planner X
 
+0 | 1|2
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="https://github.com/hl3hl3/PlannerX-Project/blob/master/readme/plannerx_0_login.png" width="300">  |  <img src="https://github.com/hl3hl3/PlannerX-Project/blob/master/readme/plannerx_1_signup.png" width="300"> | <img src="https://github.com/hl3hl3/PlannerX-Project/blob/master/readme/plannerx_1_signup_location.png" width="300">
+
+
+3 | 4|5
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="https://github.com/hl3hl3/PlannerX-Project/blob/master/readme/plannerx_2_list.png" width="300"> | <img src="https://github.com/hl3hl3/PlannerX-Project/blob/master/readme/plannerx_3_detail.png" width="300"> | <img src="https://github.com/hl3hl3/PlannerX-Project/blob/master/readme/plannerx_4_explore.png" width="300">
+
 ## About
 Life is short and fragile. Priorities your goals, take notes and remind you to take action on #PlannerX. Live life with no regrets from NOW!
 
