@@ -50,8 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           // animation
           Center(
-              child: SizedBox(
-                  width: width * 0.8, height: width * 0.8, child: _mainAnim())),
+            child: SizedBox(
+              width: width * 0.8,
+              height: width * 0.8,
+              child: _mainAnim(),
+            ),
+          ),
           // app title
           Positioned(
             top: pagePadding01,
