@@ -19,9 +19,9 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen>
     with SingleTickerProviderStateMixin {
-  TextEditingController locationTEC;
-  TextEditingController birthdayTEC;
-  TextEditingController genderTEC;
+//  TextEditingController locationTEC;
+//  TextEditingController birthdayTEC;
+//  TextEditingController genderTEC;
   TextEditingController nameTEC;
 
   double width = 0;
@@ -29,6 +29,8 @@ class _SignUpScreenState extends State<SignUpScreen>
   double panelWidth = 0;
   double pagePadding01 = 0;
   double pagePadding005 = 0;
+  double profileLabelWidth = 0;
+  double profileValueWidth = 0;
 
   @override
   void didChangeDependencies() {
@@ -38,14 +40,16 @@ class _SignUpScreenState extends State<SignUpScreen>
     panelWidth = MediaQuery.of(context).size.width - 48;
     pagePadding01 = width * 0.1;
     pagePadding005 = width * 0.05;
+    profileLabelWidth = (panelWidth - (pagePadding005 * 3)) * 0.38;
+    profileValueWidth = (panelWidth - (pagePadding005 * 3)) * 0.58;
   }
 
   @override
   void initState() {
     super.initState();
-    locationTEC = TextEditingController();
-    birthdayTEC = TextEditingController();
-    genderTEC = TextEditingController();
+//    locationTEC = TextEditingController();
+//    birthdayTEC = TextEditingController();
+//    genderTEC = TextEditingController();
     nameTEC = TextEditingController();
   }
 
@@ -66,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 _profileArea(),
                 SizedBox(height: 20),
                 _expectancyArea(
-                  areaLabel: '${locationTEC.text} $kLifeExp',
+                  areaLabel: '${_selectedLocation ?? ""} $kLifeExp',
                 ),
                 SizedBox(height: 20),
                 _footerArea(context),
@@ -97,6 +101,9 @@ class _SignUpScreenState extends State<SignUpScreen>
     String areaLabel,
   }) {
     final areaWidth = panelWidth - width * 0.2 + 16;
+
+    final remainYears = _countAge(_birthdayDisplayString()) ?? kDefaultAge;
+
     return PanelWidget(
       panelSize: Size(panelWidth, panelWidth * 0.5),
       title: kExpectancy,
@@ -113,6 +120,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                 style: TextStyle(color: Colors.white),
               ),
             ),
+//            CountWidget(
+//              targetNumber: _countRemainYears(birthdayTEC.text),
+//              fromNumber: 0,
+//            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -124,8 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                       key: UniqueKey(),
                       child: RichText(
                         text: TextSpan(
-                            text: _countAge(birthdayTEC.text) ?? kDefaultAge,
-                            style: TextStyle(fontSize: 90)),
+                            text: remainYears, style: TextStyle(fontSize: 90)),
                       ),
                     ),
                   ],
@@ -134,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                   direction: Axis.vertical,
                   children: [
                     Text(
-                      '/${avgLife["${locationTEC.text == '' ? kDefaultArea : locationTEC.text}"]}',
+                      '/${avgLife["${_selectedLocation ?? kDefaultArea}"]}',
                       style: TextStyle(color: Colors.white),
                     ),
                   ],
@@ -155,43 +165,187 @@ class _SignUpScreenState extends State<SignUpScreen>
     );
   }
 
-  PanelWidget _profileArea() {
-    return PanelWidget(
-      panelSize: Size(panelWidth, panelWidth * 0.85),
-      title: kProfile,
-      titleTextSize: 14,
-      contentWidget: Column(
-        children: [
-          oneRow(
-            kName,
-            kNameHint,
-            panelWidth: panelWidth,
-            textEditingController: nameTEC,
-          ),
-          oneRow(
-            kBirthday,
-            kBirthdayHint,
-            panelWidth: panelWidth,
-            textEditingController: birthdayTEC,
-          ),
-          oneRow(
-            kLocation,
-            kLocationHint,
-            panelWidth: panelWidth,
-            pickData: avgLife,
-            textEditingController: locationTEC,
-          ),
-          oneRow(
-            kGender,
-            kGenderHint,
-            panelWidth: panelWidth,
-            pickData: {kGenderMale: 0, kGenderFemale: 0},
-            loop: false,
-            textEditingController: genderTEC,
-          ),
-        ],
+  DateTime selectedDate = DateTime.now();
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
+  String _birthdayDisplayString() {
+    return "${selectedDate.year}/${selectedDate.month}/${selectedDate.day}";
+  }
+
+  String _selectedLocation;
+
+  String _selectedGender;
+
+  Widget _profileAreaLabel(String title) {
+    return SizedBox(
+      width: profileLabelWidth,
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.subtitle2.apply(
+              color: kThemeColor,
+            ),
       ),
     );
+  }
+
+  final double valueHeight = 36;
+  final double valueInputHeight = 48;
+  final double valueVerticalPadding = 12;
+
+  Widget _profileArea() {
+    final textTheme = Theme.of(context).textTheme;
+    final areaHeight = pagePadding01 * 2 +
+        ((valueVerticalPadding + valueHeight) * 3) +
+        valueInputHeight;
+    return Stack(
+      children: [
+        PanelWidget(
+          panelSize: Size(panelWidth, areaHeight),
+          title: kProfile,
+          titleTextSize: 14,
+          contentWidget: SizedBox(),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(
+            vertical: pagePadding01,
+          ),
+          child: Center(
+            child: Wrap(
+              direction: Axis.vertical,
+              spacing: valueVerticalPadding,
+              children: [
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    _profileAreaLabel(kName),
+                    Container(
+                      width: profileValueWidth,
+                      decoration: BoxDecoration(
+                        color: kThemeColor_transparent,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                      child: TextField(
+                        controller: nameTEC,
+                        decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+                          border: InputBorder.none,
+                          hintText: kNameHint,
+                          hintStyle: TextStyle(color: kTextColor, fontSize: 14),
+                          labelStyle:
+                              TextStyle(color: kThemeColor, fontSize: 14),
+                        ),
+                        textAlign: TextAlign.center,
+                        style: textTheme.subtitle2.apply(
+                          color: kThemeColor,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                // birthday
+                Wrap(
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    _profileAreaLabel(kBirthday),
+                    _profileValueButton(
+                      onTap: () => _selectDate(context),
+                      displayText: _birthdayDisplayString(),
+                      hint: kBirthdayHint,
+                    ),
+                  ],
+                ),
+                Wrap(
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    _profileAreaLabel(kLocation),
+                    _profileValueButton(
+                      onTap: _pickLocation,
+                      displayText: _selectedLocation,
+                      hint: kLocationHint,
+                    ),
+                  ],
+                ),
+
+                // gender
+                Wrap(
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    _profileAreaLabel(kGender),
+                    _profileValueButton(
+                      onTap: _pickGender,
+                      displayText: _selectedGender,
+                      hint: kGenderHint,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _profileValueButton(
+      {VoidCallback onTap, String displayText, String hint}) {
+    TextStyle textStyle = Theme.of(context)
+        .textTheme
+        .subtitle2
+        .apply(color: displayText == null ? kTextColor : kThemeColor);
+
+    return SizedBox(
+      width: profileValueWidth,
+      height: valueHeight,
+      child: FlatButton(
+          color: kThemeColor_transparent,
+          onPressed: onTap,
+          padding: EdgeInsets.symmetric(vertical: 12),
+          child: Text(
+            displayText ?? hint,
+            style: textStyle,
+          )),
+    );
+  }
+
+  _pickLocation() async {
+    String selected = await showDragoonCupertinoPicker(
+      context,
+      avgLife,
+      title: kLocation,
+      loop: true,
+    );
+    if (selected != null && selected != '') {
+      _selectedLocation = selected;
+      setState(() {});
+    }
+  }
+
+  _pickGender() async {
+    String selected = await showDragoonCupertinoPicker(
+      context,
+      {kGenderMale: 0, kGenderFemale: 0},
+      title: kLocation,
+      loop: false,
+    );
+    if (selected != null && selected != '') {
+      _selectedGender = selected;
+      setState(() {});
+    }
   }
 
   // 生日只能是yyyy/mm/dd or yyyymmdd
@@ -208,6 +362,17 @@ class _SignUpScreenState extends State<SignUpScreen>
       print('birthday parse error $e');
       return result;
     }
+  }
+
+  int _countRemainYears(String birthdayStr) {
+    if (birthdayStr == null || birthdayStr == '') return 0;
+    try {
+      final birthday = DateTime.parse(birthdayStr.replaceAll('/', ''));
+      return DateTime.now().year - birthday.year;
+    } catch (e) {
+      print('birthday parse error $e');
+    }
+    return 0;
   }
 
   Widget oneRow(
@@ -314,6 +479,77 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
     return SlideTransition(
       position: _offsetAnimation,
       child: contentWidget,
+    );
+  }
+}
+
+class CountWidget extends StatefulWidget {
+  final int targetNumber;
+  final int fromNumber;
+
+  const CountWidget({Key key, this.targetNumber, this.fromNumber})
+      : super(key: key);
+
+  @override
+  _CountWidgetState createState() => _CountWidgetState();
+}
+
+class _CountWidgetState extends State<CountWidget> {
+  int _frameCount = 0;
+  bool _disposed = true;
+  int _nowFrame = 0;
+  int durationMillis = 200;
+  String _displayText = "";
+  int _totalAmount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _disposed = true;
+  }
+
+  _reset() {
+    _totalAmount = widget.targetNumber - widget.fromNumber;
+    _frameCount = _totalAmount > 20 ? 20 : _totalAmount;
+    _nowFrame = 0;
+    _displayText = "${widget.fromNumber}";
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _reset();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_nowFrame < _frameCount) {
+      Future.delayed(Duration(milliseconds: durationMillis), () {
+        if (_disposed) {
+          return;
+        }
+        _nowFrame++;
+        if (_nowFrame == _frameCount) {
+          // final frame
+          _displayText = "${widget.targetNumber}";
+        } else {
+          _displayText = "${(_totalAmount / _frameCount) * _nowFrame}";
+        }
+        setState(() {});
+      });
+    }
+    return Container(
+      child: Text(
+        _displayText,
+        style: Theme.of(context).textTheme.headline2.apply(
+              color: kThemeColor,
+            ),
+      ),
     );
   }
 }
