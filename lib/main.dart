@@ -2,6 +2,7 @@ import 'package:bucketlist/screen/add_list_screen.dart';
 import 'package:bucketlist/screen/bucket_list_screen.dart';
 import 'package:bucketlist/screen/signup_screen.dart';
 import 'package:bucketlist/screen/login_screen.dart';
+import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
 import 'screen/test_screen.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        fontFamily: 'Wallpoet',
+        fontFamily: kMainFont,
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           bottomSheetTheme:

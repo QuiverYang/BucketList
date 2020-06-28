@@ -16,3 +16,5 @@ const List<Color> kSparkaling = [
 ];
 
 const kAppName = 'Planner X';
+
+const kMainFont = 'Wallpoet';

@@ -1,3 +1,4 @@
+import 'package:bucketlist/utilities/constant.dart';
 import 'package:flutter/material.dart';
 
 class PanelWidget extends StatelessWidget {
@@ -157,6 +158,7 @@ class PanelPainter extends CustomPainter {
         style: TextStyle(
           color: panelTitleColor,
           fontSize: titleTextSize,
+          fontFamily: kMainFont,
         ),
         text: panelTitle,
       );
