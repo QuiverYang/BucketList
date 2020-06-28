@@ -5,9 +5,9 @@ import 'package:bucketlist/utilities/fakedata.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constant.dart';
-import '../utilities/constant.dart';
 import 'component/quest_item_widget.dart';
 import 'component/util_widget.dart';
+import 'detail_screen.dart';
 
 class AddListScreen extends StatefulWidget {
   AddListScreen({Key key, this.title}) : super(key: key);
@@ -113,15 +113,25 @@ class _AddListScreenState extends State<AddListScreen>
   }
 
   Widget _categoryListItemBuilder(String category, int index) {
-    return QuestListItem(
-      panelSize: Size(_panelWidth, questItemPanelHeight),
-      data: QuestData(
-        category: category,
-        title: questTitles1[category].elementAt(index),
-        iconData: null,
-        deadline: "---- / -- / --",
-        progressTotal: totalProgressCount,
-        progressNow: Random.secure().nextInt(totalProgressCount),
+    final data = QuestData(
+      category: category,
+      title: questTitles1[category].elementAt(index),
+      iconData: null,
+      deadline: "---- / -- / --",
+      progressTotal: totalProgressCount,
+      progressNow: Random.secure().nextInt(totalProgressCount),
+    );
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DetailScreen(
+                  data: data,
+                  templateMode: true,
+                )));
+      },
+      child: QuestListItem(
+        panelSize: Size(_panelWidth, questItemPanelHeight),
+        data: data,
       ),
     );
   }
