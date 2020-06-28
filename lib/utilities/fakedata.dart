@@ -7,25 +7,6 @@ const List<String> categories = [
   'Self-growth'
 ];
 
-const List<String> questTitles = [
-  'Clean Beach',
-  'Reading a Book',
-  'Wash My Cat',
-  'Propose',
-  'Raise a Child',
-  'Aurora',
-  'Write an App',
-  'Reduce Waste',
-  'Fitness',
-  'Lose Weight',
-  'Housework',
-  'Visiting Grandparents',
-  'Live in a Woods',
-  'Parachute',
-  'Rock Climbing',
-  'Learning Cooking'
-];
-
 const Map<String, List<String>> questTitles1 = {
   'Environment': [
     'Clean Beach',
