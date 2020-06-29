@@ -7,7 +7,7 @@
 Life is short and fragile. Priorities your goals, take notes and remind you to take action on #PlannerX. Live life with no regrets from NOW!
 
 ## Source
-- Pitch Vidio https://www.youtube.com/watch?v=RsxFQ0blywk
+- Pitch Vidio https://www.youtube.com/watch?v=tLgq13xA60U
 - Web https://hl3hl3.github.io/PlannerX/
 - <a href="https://play.google.com/store/apps/details?id=com.monglinyang.bucketlist"><img alt="PlannerX" src="https://miro.medium.com/max/640/1*SPxI8aGE4n4lfZL-5S6w3Q.png"></a> (Reviewing)
 
